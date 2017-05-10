@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <bean name="casTicketValidationFilter" class="org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter">
+        <property name="serverName" value="http://localhost:8080" />
+        <property name="redirectAfterValidation" value="false" />
+        <property name="ticketValidator">
+            <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+                <constructor-arg index="0" value="http://99.48.237.206:8086/mr-cas" />
+                <property name="encoding" value="UTF-8" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="casHttpServletRequestWrapperFilter" class="org.jasig.cas.client.util.HttpServletRequestWrapperFilter"/>
+
+    <bean id="casAssertionThreadLocalFilter" class="org.jasig.cas.client.util.AssertionThreadLocalFilter"/>
+</beans>

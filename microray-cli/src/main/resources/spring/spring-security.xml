@@ -1,0 +1,46 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <security:debug/>
+
+    <security:global-method-security pre-post-annotations="enabled"/>
+    <security:http pattern="/user/login" security="none"/>
+    <security:http pattern="/user/casLogin" security="none"/>
+    <security:http pattern="/user/unsafe" security="none"/>
+    <security:http pattern="/user/loginStatus" security="none"/>
+
+    <bean id="restAuthenticationEntryPoint"
+          class="com.cmbchina.microray.cli.auth.RestAuthenticationEntryPoint"/>
+    <!-- Entry point for REST service. -->
+    <security:http entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
+        <security:intercept-url pattern="/any/security/**" access="hasAnyRoleRole('ROLE_USER','ROLE_BDL01')"/>
+        <security:intercept-url pattern="/bdl01/security/**" access="hasRole('ROLE_BDL01')"/>
+        <security:intercept-url pattern="/user/security/**" access="hasRole('ROLE_USER')"/>
+
+        <security:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
+    </security:http>
+
+    <!-- Custom Filter for REST service. -->
+    <bean id="jwtAuthenticationFilter" class="com.cmbchina.microray.cli.auth.JwtAuthenticationFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationSuccessHandler" ref="jwtAuthenticationSuccessHandler"/>
+    </bean>
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider
+                ref="jwtAuthenticationProvider"/>
+    </security:authentication-manager>
+    <bean id="jwtAuthenticationProvider"
+          class="com.cmbchina.microray.cli.auth.JwtAuthenticationProvider"/>
+    <!-- A handler for successful REST service authentication. -->
+    <bean id="jwtAuthenticationSuccessHandler"
+          class="com.cmbchina.microray.cli.auth.JwtAuthenticationSuccessHandler"/>
+    <bean id="jwtUtil" class="com.cmbchina.microray.cli.auth.JwtUtil">
+        <property name="secret" value="${jwt.secret}"/>
+    </bean>
+</beans>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
+
+    <groupId>com.cmbchina.</groupId>
+    <artifactId>microray-cli</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <org.springframework-version>4.3.7.RELEASE</org.springframework-version>
+        <spring.security.version>4.2.2.RELEASE</spring.security.version>
+        <jjwt.version>0.7.0</jjwt.version>
+        <java.version>1.8</java.version>
+        <tomcat.version>8.5.12</tomcat.version>
+        <jstl.version>1.2</jstl.version>
+        <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+        <log4j.version>1.2.17</log4j.version>
+        <cas-client-core.version>3.3.3.MR.1.1.0</cas-client-core.version>
+        <cas-client-integration.version>MR.1.1.0</cas-client-integration.version>
+
+        <!-- 打包-->
+        <maven.build.timestamp.format>yyMMddHHmmss</maven.build.timestamp.format>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <final.name>${project.artifactId}-${version}-${timestamp}</final.name>
+    </properties>
+    <dependencies>
+        <!-- 单元测试 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
+        <!-- Servlet -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <scope>provided</scope>
+            <version>${tomcat.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas.client</groupId>
+            <artifactId>cas-client-core</artifactId>
+            <version>${cas-client-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jasig.cas.client</groupId>
+            <artifactId>cas-client-integration-mr</artifactId>
+            <version>${cas-client-integration.version}</version>
+        </dependency>
+        <!-- Spring -->
+        <!-- Spring核心 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+
+        <!-- Spring DAO层 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+
+        <!-- Spring webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+
+        <!-- Spring test -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+
+        <!-- 工具类 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.6</version>
+        </dependency>
+        <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>${log4j.version}</version>
+    </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.8.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.31</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+    </dependencies>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profile.id>dev</profile.id>
+                <final.name>${project.artifactId}-${project.version}-dev-${timestamp}</final.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>sit</id>
+            <properties>
+                <profile.id>sit</profile.id>
+                <final.name>${project.artifactId}-${project.version}-sit-${timestamp}</final.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <properties>
+                <profile.id>uat</profile.id>
+                <final.name>${project.artifactId}-${project.version}-uat-${timestamp}</final.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profile.id>prod</profile.id>
+                <final.name>${project.artifactId}-${project.version}-prod-${timestamp}</final.name>
+            </properties>
+        </profile>
+    </profiles>
+    <!--下面部分打包室解注-->
+    <build>
+        <finalName>${final.name}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                            <goal>write-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <!--读取各环境配置文件-->
+                                <file>${user.dir}/profiles/${profile.id}/app.properties</file>
+                            </files>
+                            <!--输出全部配置项到指定文件-->
+                            <outputFile>${build.directory}/classes/META-INF/app.properties</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
