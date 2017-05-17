@@ -42,4 +42,9 @@ public class UserService {
             return responseResult;
         }
     }
+
+    public ResponseResult getUserInfoById(String userId) {
+        ResponseResult responseResult = httpCcmsService.getEmployeeInfoById(userId);
+        return responseResult;
+    }
 }

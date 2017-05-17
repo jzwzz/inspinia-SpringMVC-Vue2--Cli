@@ -4,8 +4,8 @@ import com.cmbchina.microray.cli.auth.JwtUtil;
 import com.cmbchina.microray.cli.auth.Credentials;
 import com.cmbchina.microray.cli.common.ResponseResult;
 import com.cmbchina.microray.cli.user.service.UserService;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Logger;
