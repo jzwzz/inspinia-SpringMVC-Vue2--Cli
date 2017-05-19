@@ -14,6 +14,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -27,12 +28,23 @@ import java.util.Map;
  */
 @Service
 @Log4j
-public class HttpCcmsServiceImpl implements HttpCcmsService {
 
-    private String CCMS_URL = "http://99.48.232.122:8280/mr-cas/api";
+public class HttpCcmsServiceImpl implements HttpCcmsService {
+    @Value("${cas.server}")
+    private String CAS_SERVER;
+    @Value("${cas.api.login}")
+    private String API_LOGIN;
+    @Value("${cas.api.getUserDetail}")
+    private String API_GET_USER_DETAIL;
+    @Value("${cas.page.login}")
+    private String PAGE_LOGIN;
+    @Value("${app.name}")
+    private String systemId;
+
 
     @Override
-    public ResponseResult login(String username, String password,String systemId) {
+    public ResponseResult login(String username, String password) {
+
         Map<String, Object> data = new HashMap<>();
         data.put("username", username);
         data.put("password", password);
@@ -45,7 +57,7 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
         }
         HttpClient httpClient = HttpClients.createDefault();
 
-        String url = CCMS_URL + "?action=LoginValidation&data=" + encodingData;
+        String url = CAS_SERVER + API_LOGIN + encodingData;
         HttpGet httpGet = new HttpGet(url);
         HttpResponse httpResponse = null;
         Map<String, Object> resultMap = new HashMap<>();
@@ -53,7 +65,7 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
             httpResponse = httpClient.execute(httpGet);
         } catch (IOException e) {
             log.error(e);
-            return new ResponseResult(ResponseConstants.REQUEST_FAILED,"请求CCMS异常");
+            return new ResponseResult(ResponseConstants.REQUEST_FAILED, "请求CCMS异常");
         }
         String response;
         try {
@@ -61,19 +73,48 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
             resultMap = JSON.parseObject(response);
 
             if (resultMap.get("Code").equals("000")) {
-                Employee employee = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create().fromJson(response,Employee.class);
+                Employee employee = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create().fromJson(response, Employee.class);
                 return new ResponseResult<>(employee);
             }
-            return new ResponseResult(resultMap.get("Code").toString(),resultMap.get("Msg").toString());
+            return new ResponseResult(resultMap.get("Code").toString(), resultMap.get("Msg").toString());
         } catch (IOException e) {
             log.error(e);
-            return new ResponseResult(ResponseConstants.REQUEST_FAILED,"请求CCMS异常");
+            return new ResponseResult(ResponseConstants.REQUEST_FAILED, "请求CCMS异常");
+
 
         }
     }
 
     @Override
     public ResponseResult getEmployeeInfoById(String employeeId) {
-        return null;
+        HttpClient httpClient = HttpClients.createDefault();
+        String url = CAS_SERVER + API_GET_USER_DETAIL + "&employeeId=" + employeeId + "&systemId=" + systemId;
+        HttpGet httpGet = new HttpGet(url);
+        HttpResponse httpResponse = null;
+        try {
+            httpResponse = httpClient.execute(httpGet);
+        } catch (IOException e) {
+            log.error(e);
+            return new ResponseResult(ResponseConstants.REQUEST_FAILED, "请求CCMS异常");
+        }
+        String response;
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            response = EntityUtils.toString(httpResponse.getEntity());
+            resultMap = JSON.parseObject(response);
+            Employee employee = new GsonBuilder().create().fromJson(response, Employee.class);
+            return new ResponseResult<>(employee);
+        } catch (IOException e) {
+            log.error(e);
+            return new ResponseResult(ResponseConstants.REQUEST_FAILED, "请求CCMS异常");
+
+        }
+    }
+
+    @Override
+    public String getRedirectPath(String redirectUrl) {
+//        http://99.48.237.206:8086/mr-cas/login?service=http://99.48.6.207:9080#/redirectLogin
+        return CAS_SERVER + PAGE_LOGIN + redirectUrl;
+
     }
 }

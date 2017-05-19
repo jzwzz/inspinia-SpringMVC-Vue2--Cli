@@ -6,11 +6,43 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:spring/spring-mvc-config.xml,classpath:spring/spring-security.xml
+            classpath:applicationContext_cas.xml,classpath:spring/spring-security.xml
         </param-value>
     </context-param>
+
+    <!-- cas票据验证filter -->
+    <filter>
+        <filter-name>casTicketValidationFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>casTicketValidationFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+    <!-- cas用户数据filter，可通过HttpServletRequest的getRemoteUser()获取登录名 -->
+    <filter>
+        <filter-name>casHttpServletRequestWrapperFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>casHttpServletRequestWrapperFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- cas用户数据filter，可通过AssertionHolder.getAssertion().getPrincipal().getName()获取登录名 -->
+    <filter>
+        <filter-name>casAssertionThreadLocalFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>casAssertionThreadLocalFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.cmbchina.microray.cli.auth.cas.CASConfigContextListener</listener-class>
     </listener>
     <filter>
         <filter-name>characterEncodingFilter</filter-name>

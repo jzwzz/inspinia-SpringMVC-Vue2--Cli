@@ -11,16 +11,18 @@
 
     <security:global-method-security pre-post-annotations="enabled"/>
     <security:http pattern="/user/login" security="none"/>
+    <security:http pattern="/user/casLogin" security="none"/>
     <security:http pattern="/user/unsafe" security="none"/>
+    <security:http pattern="/user/loginStatus/**" security="none"/>
+
 
     <bean id="restAuthenticationEntryPoint"
           class="com.cmbchina.microray.cli.auth.RestAuthenticationEntryPoint"/>
     <!-- Entry point for REST service. -->
     <security:http entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
-        <security:intercept-url pattern="/any/security/**" access="hasRole('ROLE_USER','ROLE_BDL01')"/>
+        <security:intercept-url pattern="/any/security/**" access="hasAnyRoleRole('ROLE_USER','ROLE_BDL01')"/>
         <security:intercept-url pattern="/bdl01/security/**" access="hasRole('ROLE_BDL01')"/>
-        <security:intercept-url pattern="/user/security/**" access="hasAnyRole('ROLE_USER')"/>
-
+        <security:intercept-url pattern="/user/security/**" access="hasRole('ROLE_USER')"/>
         <security:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
     </security:http>
 

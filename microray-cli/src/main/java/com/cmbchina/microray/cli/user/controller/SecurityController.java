@@ -4,10 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Created by sx2606
- * on 2017/5/3.
- */
+/* * @Company: China Merchants Bank * @Copyright: Copyright 2015 China Merchants Bank. All rights reserved. */
+
 @RestController
 @RequestMapping("security")
 public class SecurityController {

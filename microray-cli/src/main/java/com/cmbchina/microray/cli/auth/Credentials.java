@@ -1,16 +1,14 @@
 package com.cmbchina.microray.cli.auth;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Setter
-@Getter
-@ToString
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class Credentials {
 
     private String username;
     private String password;
-    private String systemId;
     private String roles;
 }

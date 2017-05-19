@@ -17,11 +17,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Created by sx2606
- * on 2017/5/3.
- */
-@ContextConfiguration({"classpath:spring/spring-mvc-config.xml",  "classpath:spring/spring-security.xml"})
+/* * @Company: China Merchants Bank * @Copyright: Copyright 2015 China Merchants Bank. All rights reserved. */
+@ContextConfiguration({"classpath:spring/spring-mvc-config.xml", "classpath:spring/spring-security.xml"})
+
 @WebAppConfiguration
 public class SpringSecurityMvcTest extends AbstractJUnit4SpringContextTests {
 
@@ -52,7 +50,7 @@ public class SpringSecurityMvcTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void requestWithToken() throws Exception {
-        final String token = "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IjY3MTg1MiIsInBhc3N3b3JkIjoiMTExIiwicm9sZSI6IlJPTEVfUkFORE9NIn0.iW2xQpr9eX---6eJZrEKIdYEti9EHwd2wbs3a6aakxpN_f8_0zpxh2ESfYWkNAlnXtFOHPcL-8fs5FptAnSEFQ";
+        final String token = "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IjY3MTg1MiIsInBhc3N3b3JkIjoiMTExIiwicm9sZXMiOiJST0xFX1VTRVIifQ.4EO2rgJAEUUifj2ktU7Y40FeNIw987ZLOGWEIj-dU4OUlmmsbQWAz7TuVcCA6lGOF8aEWwgxL9YQytNLSdIPJg";
         mvc.perform(get("/user/security").param("message", "hello")
                 .header("Authorization", "Bearer " + token).with(csrf()))
                 .andExpect(status().isOk()).andDo(print());

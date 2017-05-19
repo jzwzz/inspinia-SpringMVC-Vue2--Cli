@@ -8,7 +8,10 @@ import com.cmbchina.microray.cli.common.ResponseResult;
  */
 public interface HttpCcmsService {
 
-    ResponseResult login(String username, String password,String systemId);
+    ResponseResult login(String username, String password);
 
     ResponseResult getEmployeeInfoById(String employeeId);
+
+    String getRedirectPath(String redirectUrl);
+
 }

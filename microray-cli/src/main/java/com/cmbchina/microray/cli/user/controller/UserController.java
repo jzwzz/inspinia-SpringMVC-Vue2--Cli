@@ -1,17 +1,22 @@
 package com.cmbchina.microray.cli.user.controller;
 
-import com.cmbchina.microray.cli.auth.JwtUtil;
 import com.cmbchina.microray.cli.auth.Credentials;
+import com.cmbchina.microray.cli.auth.JwtUtil;
+import com.cmbchina.microray.cli.common.ResponseConstants;
 import com.cmbchina.microray.cli.common.ResponseResult;
+import com.cmbchina.microray.cli.user.entity.Employee;
 import com.cmbchina.microray.cli.user.service.UserService;
-import com.google.gson.Gson;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 
-@RestController
+@Controller
 @RequestMapping("/user")
+@Log4j
+
 @CrossOrigin
 public class UserController {
 
@@ -20,23 +25,46 @@ public class UserController {
 
     @Autowired
     UserService userService;
-    private Logger logger = Logger.getLogger(UserController.class.getName());
 
 
-    @RequestMapping(value = "/login", method = {RequestMethod.POST,
-            RequestMethod.POST}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/login", produces = "application/json;charset=utf-8")
+    @ResponseBody
     ResponseResult login(Credentials credentials) {
 
         return userService.login(credentials);
     }
 
     @RequestMapping(value = "security", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+    @ResponseBody
     String getUserInfoWithToken(String message) {
         return "security: " + message;
     }
 
     @RequestMapping(value = "unsafe", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+    @ResponseBody
     String getUserInfoWithoutToken(String message) {
         return "unsafe: " + message;
+    }
+
+    //    for cas login，delete if use CCMS api login
+    @RequestMapping(value = "casLogin")
+    public String casLogin(@RequestParam("redirectUrl") String url) {
+        Employee employee = userService.checkLogin();
+
+        if (employee != null) {
+            return "redirect:" + url+"/"+employee.getToken();
+        }
+        return "redirect:" + userService.getCasRedirectUrl(url);
+    }
+
+    @RequestMapping(value = "loginStatus",method = RequestMethod.POST)
+    public @ResponseBody
+    ResponseResult loginStatus(@RequestParam String  token) {
+        Employee employee = userService.validateToken(token);
+        if (employee != null) {
+            return new ResponseResult(employee);
+        } else
+            return new ResponseResult(ResponseConstants.INTERNAL_ERROR, "backend not logged in or token invalid");
+
     }
 }

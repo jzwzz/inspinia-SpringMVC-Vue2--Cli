@@ -21,7 +21,7 @@ public class JwtUtil {
      * @return the User object extracted from specified token or null if a token
      * is invalid.
      */
-    Credentials parseToken(String token) {
+    public Credentials parseToken(String token) {
         try {
             Claims body = Jwts.parser().setSigningKey(secret)
                     .parseClaimsJws(token).getBody();
@@ -58,7 +58,7 @@ public class JwtUtil {
         JwtUtil jwtUtil = new JwtUtil();
         jwtUtil.secret = "microray-cli-secret";
         Credentials user = new Credentials();
-        user.setUsername("671852");
+        user.setUsername("672991");
         user.setPassword("111");
         user.setRoles("ROLE_USER");
         String token = jwtUtil.generateToken(user);

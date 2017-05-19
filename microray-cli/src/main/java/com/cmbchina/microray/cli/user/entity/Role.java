@@ -12,6 +12,13 @@ import lombok.Data;
 public class Role {
     private String roleId;
     private String roleName;
+    private String systemId;
+
+    public Role(String roleId, String roleName) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+    }
+
 
     public String getRoleId() {
         if (roleId.startsWith("ROLE_")) {
