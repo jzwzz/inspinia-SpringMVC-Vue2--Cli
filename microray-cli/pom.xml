@@ -41,7 +41,6 @@
             <scope>provided</scope>
             <version>${tomcat.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.jasig.cas.client</groupId>
             <artifactId>cas-client-core</artifactId>
@@ -52,6 +51,7 @@
             <artifactId>cas-client-integration-mr</artifactId>
             <version>${cas-client-integration.version}</version>
         </dependency>
+
         <!-- Spring -->
         <!-- Spring核心 -->
         <dependency>

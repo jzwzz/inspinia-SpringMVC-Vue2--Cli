@@ -13,4 +13,5 @@ public interface HttpCcmsService {
     ResponseResult getEmployeeInfoById(String employeeId);
 
     String getRedirectPath(String redirectUrl);
+
 }

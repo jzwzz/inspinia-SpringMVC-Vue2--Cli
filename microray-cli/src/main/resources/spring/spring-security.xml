@@ -15,6 +15,7 @@
     <security:http pattern="/user/unsafe" security="none"/>
     <security:http pattern="/user/loginStatus/**" security="none"/>
 
+
     <bean id="restAuthenticationEntryPoint"
           class="com.cmbchina.microray.cli.auth.RestAuthenticationEntryPoint"/>
     <!-- Entry point for REST service. -->
@@ -22,7 +23,6 @@
         <security:intercept-url pattern="/any/security/**" access="hasAnyRoleRole('ROLE_USER','ROLE_BDL01')"/>
         <security:intercept-url pattern="/bdl01/security/**" access="hasRole('ROLE_BDL01')"/>
         <security:intercept-url pattern="/user/security/**" access="hasRole('ROLE_USER')"/>
-
         <security:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
     </security:http>
 

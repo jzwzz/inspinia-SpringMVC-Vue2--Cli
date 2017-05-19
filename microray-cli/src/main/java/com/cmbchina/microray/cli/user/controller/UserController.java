@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/user")
 @Log4j
+
 @CrossOrigin
 public class UserController {
 
@@ -29,6 +30,7 @@ public class UserController {
     @RequestMapping(value = "/login", produces = "application/json;charset=utf-8")
     @ResponseBody
     ResponseResult login(Credentials credentials) {
+
         return userService.login(credentials);
     }
 
@@ -65,5 +67,4 @@ public class UserController {
             return new ResponseResult(ResponseConstants.INTERNAL_ERROR, "backend not logged in or token invalid");
 
     }
-
 }

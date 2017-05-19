@@ -19,6 +19,7 @@ public class Role {
         this.roleName = roleName;
     }
 
+
     public String getRoleId() {
         if (roleId.startsWith("ROLE_")) {
             return roleId;

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 /**
  * @Company: China Merchants Bank
  * @Copyright: Copyright 2015 China Merchants Bank. All rights reserved.
@@ -41,6 +42,7 @@ public class UserService {
             employee.addRole(new Role("USER", "普通用户"));
             if (employee.getRoles() == null) {
                 logger.warn("No role exist in system **" + systemId + "** for user " + credentials.getUsername() + "grant role DEFAULT");
+
             } else {
                 credentials.setRoles(employee.getCommaDelimitedRoleIds());
             }

@@ -15,7 +15,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -45,6 +44,7 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
 
     @Override
     public ResponseResult login(String username, String password) {
+
         Map<String, Object> data = new HashMap<>();
         data.put("username", username);
         data.put("password", password);
@@ -81,6 +81,7 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
             log.error(e);
             return new ResponseResult(ResponseConstants.REQUEST_FAILED, "请求CCMS异常");
 
+
         }
     }
 
@@ -114,5 +115,6 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
     public String getRedirectPath(String redirectUrl) {
 //        http://99.48.237.206:8086/mr-cas/login?service=http://99.48.6.207:9080#/redirectLogin
         return CAS_SERVER + PAGE_LOGIN + redirectUrl;
+
     }
 }
