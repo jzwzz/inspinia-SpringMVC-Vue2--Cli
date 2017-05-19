@@ -84,13 +84,25 @@ public class UserService {
         return user;
     }
 
+    //    get employee from valid token
     public Employee validateToken(String token) {
         Credentials credentials = jwtUtil.parseToken(token);
-        if (credentials != null) {
-            Employee employee = (Employee) getUserInfoById(credentials.getUsername()).getData();
-            return employee;
-        } else {
+        if (credentials == null) {
             return null;
+        }
+        ResponseResult responseResult = getUserInfoById(credentials.getUsername());
+        if (!responseResult.isSuccess()) {
+            return null;
+        } else {
+            Employee employee = (Employee) responseResult.getData();
+            employee.addRole(new Role("USER", "普通用户"));
+            if (employee.getRoles() == null) {
+                logger.warn("No role exist in system **" + systemId + "** for user " + credentials.getUsername() + "grant role DEFAULT");
+            } else {
+                credentials.setRoles(employee.getCommaDelimitedRoleIds());
+            }
+            employee.setToken(token);
+            return employee;
         }
     }
 }

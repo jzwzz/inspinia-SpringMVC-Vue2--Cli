@@ -101,7 +101,7 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
         try {
             response = EntityUtils.toString(httpResponse.getEntity());
             resultMap = JSON.parseObject(response);
-            Employee employee = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create().fromJson(response, Employee.class);
+            Employee employee = new GsonBuilder().create().fromJson(response, Employee.class);
             return new ResponseResult<>(employee);
         } catch (IOException e) {
             log.error(e);

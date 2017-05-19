@@ -55,14 +55,14 @@ public class UserController {
         return "redirect:" + userService.getCasRedirectUrl(url);
     }
 
-    @RequestMapping(value = "loginStatus/{token}")
+    @RequestMapping(value = "loginStatus",method = RequestMethod.POST)
     public @ResponseBody
-    ResponseResult loginStatus(@PathVariable String  token) {
-        Employee employee = userService.validateToken();
+    ResponseResult loginStatus(@RequestParam String  token) {
+        Employee employee = userService.validateToken(token);
         if (employee != null) {
             return new ResponseResult(employee);
         } else
-            return new ResponseResult(ResponseConstants.INTERNAL_ERROR, "backend not logged in");
+            return new ResponseResult(ResponseConstants.INTERNAL_ERROR, "backend not logged in or token invalid");
 
     }
 

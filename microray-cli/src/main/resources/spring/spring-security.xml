@@ -13,7 +13,7 @@
     <security:http pattern="/user/login" security="none"/>
     <security:http pattern="/user/casLogin" security="none"/>
     <security:http pattern="/user/unsafe" security="none"/>
-    <security:http pattern="/user/loginStatus" security="none"/>
+    <security:http pattern="/user/loginStatus/**" security="none"/>
 
     <bean id="restAuthenticationEntryPoint"
           class="com.cmbchina.microray.cli.auth.RestAuthenticationEntryPoint"/>
