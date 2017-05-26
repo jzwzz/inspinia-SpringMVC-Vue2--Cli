@@ -10,6 +10,7 @@
     <security:debug/>
 
     <security:global-method-security pre-post-annotations="enabled"/>
+    <security:http pattern="/" security="none"/>
     <security:http pattern="/user/login" security="none"/>
     <security:http pattern="/user/unsafe" security="none"/>
 

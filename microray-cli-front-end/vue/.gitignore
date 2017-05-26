@@ -1,0 +1,41 @@
+.DS_Store
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.idea
+# comment
+*.iml
+# log file
+*.log
+# build files
+*/WebRoot/WEB-INF/classes/
+*/WebContent/WEB-INF/classes/
+**/build/
+**/bin
+*.class
+#ide file
+*/.idea/
+.idea/
+*/out/
+~*
+
+
+
+# IntelliJ
+/out/
+
+
+*.iml
+# modules.xml
+# .idea/misc.xml 
+# *.ipr
+
+
+### Java ###
+*.class
+
+target/
+
+.vscode

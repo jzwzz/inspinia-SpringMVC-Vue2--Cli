@@ -1,0 +1,94 @@
+[
+    {
+        "roleId": "ROLE_USER",
+        "roleName": "普通用户",
+        "menus": [
+            {
+                "index": "1",
+                "icon": "fa fa-dashboard",
+                "path": "/dashboard",
+                "name": "xx面板1",
+                "subMenus": [
+                    {
+                        "index": "1-1",
+                        "icon": "fa fa-user",
+                        "path": "/user",
+                        "name": "用户面板"
+                    },
+                    {
+                        "index": "1-2",
+                        "icon": "fa fa-send",
+                        "path": "/basic-info",
+                        "name": "基础信息"
+                    }
+                ]
+            },
+            {
+                "index": "2",
+                "icon": "fa fa-user",
+                "path": "/user",
+                "name": "xx面板2",
+                "subMenus": [
+                    {
+                        "index": "2-1",
+                        "icon": "fa fa-user",
+                        "path": "/user",
+                        "name": "用户面板2"
+                    },
+                    {
+                        "index": "2-2",
+                        "icon": "fa fa-send",
+                        "path": "/basic-info",
+                        "name": "基础信息2"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "roleId": "ROLE_BDL01",
+        "roleName": "科室主管角色",
+        "menus": [
+            {
+                "index": "1",
+                "icon": "fa fa-dashboard",
+                "path": "/dashboard",
+                "name": "主管面板",
+                "subMenus": [
+                    {
+                        "index": "1-1",
+                        "icon": "fa fa-user",
+                        "path": "/dashboard",
+                        "name": "主管审核"
+                    },
+                    {
+                        "index": "1-2",
+                        "icon": "fa fa-send",
+                        "path": "/basic-info",
+                        "name": "基础信息"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "roleId": "ROLE_BDL02",
+        "roleName": "管理员角色",
+        "menus": [
+            {
+                "index": "1",
+                "icon": "fa fa-dashboard",
+                "path": "/dashbord",
+                "name": "xx面板",
+                "subMenus": [
+                    {
+                        "index": "1-1",
+                        "icon": "fa fa-user",
+                        "path": "/user",
+                        "name": "用户面板"
+                    }
+                ]
+            }
+        ]
+    }
+]
