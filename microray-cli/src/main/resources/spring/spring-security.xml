@@ -10,6 +10,7 @@
     <security:debug/>
 
     <security:global-method-security pre-post-annotations="enabled"/>
+    <security:http pattern="/" security="none"/>
     <security:http pattern="/user/login" security="none"/>
     <security:http pattern="/user/casLogin" security="none"/>
     <security:http pattern="/user/unsafe" security="none"/>
@@ -23,6 +24,7 @@
         <security:intercept-url pattern="/any/security/**" access="hasAnyRoleRole('ROLE_USER','ROLE_BDL01')"/>
         <security:intercept-url pattern="/bdl01/security/**" access="hasRole('ROLE_BDL01')"/>
         <security:intercept-url pattern="/user/security/**" access="hasRole('ROLE_USER')"/>
+
         <security:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
     </security:http>
 

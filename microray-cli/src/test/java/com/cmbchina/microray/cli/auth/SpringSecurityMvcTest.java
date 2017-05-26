@@ -19,7 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /* * @Company: China Merchants Bank * @Copyright: Copyright 2015 China Merchants Bank. All rights reserved. */
 @ContextConfiguration({"classpath:spring/spring-mvc-config.xml", "classpath:spring/spring-security.xml"})
-
 @WebAppConfiguration
 public class SpringSecurityMvcTest extends AbstractJUnit4SpringContextTests {
 

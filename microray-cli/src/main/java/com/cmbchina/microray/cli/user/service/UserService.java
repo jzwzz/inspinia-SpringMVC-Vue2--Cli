@@ -62,7 +62,6 @@ public class UserService {
         ResponseResult responseResult = httpCcmsService.getEmployeeInfoById(userId);
         return responseResult;
     }
-
     public Employee checkLogin() {
         if (AssertionHolder.getAssertion() == null
                 || AssertionHolder.getAssertion().getPrincipal() == null
@@ -107,4 +106,5 @@ public class UserService {
             return employee;
         }
     }
+
 }

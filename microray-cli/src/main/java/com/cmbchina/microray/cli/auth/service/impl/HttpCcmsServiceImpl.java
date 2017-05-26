@@ -29,6 +29,7 @@ import java.util.Map;
 @Service
 @Log4j
 
+
 public class HttpCcmsServiceImpl implements HttpCcmsService {
     @Value("${cas.server}")
     private String CAS_SERVER;
@@ -44,6 +45,7 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
 
     @Override
     public ResponseResult login(String username, String password) {
+
 
         Map<String, Object> data = new HashMap<>();
         data.put("username", username);
@@ -80,8 +82,6 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
         } catch (IOException e) {
             log.error(e);
             return new ResponseResult(ResponseConstants.REQUEST_FAILED, "请求CCMS异常");
-
-
         }
     }
 
@@ -115,6 +115,6 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
     public String getRedirectPath(String redirectUrl) {
 //        http://99.48.237.206:8086/mr-cas/login?service=http://99.48.6.207:9080#/redirectLogin
         return CAS_SERVER + PAGE_LOGIN + redirectUrl;
-
     }
+
 }
