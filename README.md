@@ -18,12 +18,14 @@
 
 前台目前使用了Vue.js版本，欢迎有时间的同学提供angular，react的版本。
 
+目前该项目还处于beta版本，可能会有一些bug和不足，使用时看情况要做修改，欢迎有余力的同学加入一起维护。
+
 ## 使用
 
 ```shell
 git clone http://git.cs/CCD_MicroRay/microray-cli.git
 ```
-选择对应的版本，目前有如下版本：
+选择对应的版本，目前有如下版本(cas-version 尚未完善)：
 * no-cas-version 未集成单点登录页面，直接通过系统自己的登录页面登录
 * cas-version 集成单点登录，跳转单点登录进行登录
 
