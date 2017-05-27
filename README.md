@@ -28,16 +28,16 @@ git clone http://git.cs/CCD_MicroRay/microray-cli.git
 * no-cas-version 未集成单点登录页面，直接通过系统自己的登录页面登录
 * cas-version 集成单点登录，跳转单点登录进行登录
 
-##　功能
+## 功能
 
-－－－
+> 
 * 单点登录API登录
 * 访问资源控制
 * jwt token 校验
 * 可配置的前台菜单
 * inspinia主题集成
 
-－－－TODO
+> TODO
 * 前台后台基础组件编写，例子编写
 * 后台token带过期时间校验
 * 补充使用文档
