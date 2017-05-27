@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../vuex/store'
+import API from '../config.js'
 Vue.use(VueRouter)
 
 let routes = [
@@ -10,7 +11,7 @@ let routes = [
     component: resolve => {
       require(['../views/layout'], resolve)
     },
-    meta: { requiresAuth: true },
+    meta: {requiresAuth: true},
     children: [
       {
         path: '/dashboard',
@@ -18,7 +19,7 @@ let routes = [
         component: resolve => {
           require(['../views/dashboard'], resolve)
         },
-        meta: { requiresAuth: true }
+        meta: {requiresAuth: true}
       },
       {
         path: '/user',
@@ -26,15 +27,15 @@ let routes = [
         component: resolve => {
           require(['../views/user/index'], resolve)
         },
-        meta: { requiresAuth: true }
+        meta: {requiresAuth: true}
       },
       {
         path: '/basic-info',
-        name: 'basice-info',
+        name: 'basic-info',
         component: resolve => {
           require(['../views/user/basic-info'], resolve)
         },
-        meta: { requiresAuth: true }
+        meta: {requiresAuth: true}
       }
     ]
   },
@@ -44,15 +45,18 @@ let routes = [
     component: resolve => {
       require(['../views/login'], resolve)
     },
-    meta: { requiresAuth: false }
+    meta: {requiresAuth: false}
   },
   {
     path: '*',
     redirect: '/login'
   },
   {
-    path: '/',
-    redirect: '/dashboard'
+    path: '/redirectLogin/:token',
+    name: 'redirectLogin',
+    component: resolve => {
+      require(['../views/redirectLogin'], resolve)
+    }
   }
 ]
 
@@ -72,29 +76,23 @@ router.beforeEach((to, from, next) => {
       // 存在authorization信息，则验证下。
       if (Vue.$localStorage.authorization) {
         _checkAuth().then(
-          function() {
+          function () {
             next()
           },
-          function() {
-            next({
-              name: 'login'
-            })
+          function () {
+            redirectToCas()
           }
         )
       } else {
-        next({
-          name: 'login'
-        })
+        redirectToCas()
       }
     } else {
       _checkAuth().then(
-        function() {
+        function () {
           next()
         },
-        function() {
-          next({
-            name: 'login'
-          })
+        function () {
+          redirectToCas()
         }
       )
     }
@@ -106,8 +104,8 @@ router.beforeEach((to, from, next) => {
 /**
  * Token验证，只是对时间验证过期否
  * */
-function _checkAuth() {
-  return new Promise(function(resolve, reject) {
+function _checkAuth () {
+  return new Promise(function (resolve, reject) {
     let authorization = Vue.$localStorage.authorization
 
     let time = parseInt(authorization.time)
@@ -137,4 +135,7 @@ function _checkAuth() {
   })
 }
 
+function redirectToCas () {
+  window.location.href = API.casLogin + API.backendCasLogin
+}
 export default router

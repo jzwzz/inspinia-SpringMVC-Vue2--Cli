@@ -26,12 +26,27 @@
 </template>
 
 <script>
-
+  import API from '../../config.js'
+  import { mapState, mapMutations } from 'vuex'
   export default {
     props: ['admin'],
     methods: {
+      ...mapMutations({
+        setCurrentRole: 'setCurrentRole',
+        setLoginState: 'setLoginState',
+        updateUserInfo: 'updateUserInfo'
+      }),
       toggleCanvasMenu: function () {
         window.document.body.classList.toggle('mini-navbar')
+      },
+      logout: function () {
+        this.$localStorage.$delete('authorization')
+        this.$localStorage.$delete('userInfo')
+        this.$http.headers.common['authorization'] = ''
+        this.setLoginState(false)
+        this.updateUserInfo('')
+        this.setCurrentRole('')
+        window.location.href = API.casLogin
       }
     }
   }

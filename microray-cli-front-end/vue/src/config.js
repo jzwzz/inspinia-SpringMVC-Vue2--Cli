@@ -2,15 +2,22 @@
 let CONFIG
 if (process.env.NODE_ENV === 'production') {
   CONFIG = {
-    url: 'http://bigdatalab.microray/data-lab'
+    url: 'http://bigdatalab.microray/data-lab',
+    casUrl: 'http://microray:8086',
+    deploy: 'http://bigdatalab.microray'
   }
 } else {
   CONFIG = {
-    url: 'http://localhost:8080/'
+    url: 'http://99.48.28.44:8080',
+    casUrl: 'http://99.48.232.122:8280/mr-cas',
+    deploy: 'http://99.48.6.207:9080'
+
   }
 }
 // 接口API根地址
-const url = CONFIG.url
+const backend = CONFIG.url
+const cas = CONFIG.casUrl
+const frontend = CONFIG.deploy
 
 module.exports = {
   /**
@@ -20,32 +27,11 @@ module.exports = {
   SYS_ERR: 'SYS_ERR', // api请求系统错误
 
   // 登录
-  login: `${url}/user/login?systemId=BDLPortal`,
-  doLogin: `${url}/api/do_login`,
+  login: `${backend}/user/login`,
+  doLogin: `${backend}/api/do_login`,
+  backendCasLogin: `${backend}/user/casLogin?redirectUrl=` + encodeURIComponent(encodeURIComponent(`${frontend}/#/redirectLogin`)),
+  casLogin: `${cas}/login?service=`,
+  casLogout: `${cas}/logout`,
+  loginStatus: `${backend}/user/loginStatus`
 
-  // 获取资源
-  getResource: `${url}/resource/type`,
-  // 获取数据表详情
-  getResourceDetail: `${url}/resource/data/table`,
-  // 提交申请
-  postApply: `${url}/process/apply`,
-
-  getApplyList: `${url}/process/application/list/userId`,
-
-  getApplyDetail: `${url}/process/application/applyId`,
-
-  getApplyLogsByLogId: `${url}/process/log/list/applyId`,
-
-  uploadFile: `${url}/upload/file`,
-
-  // 审核流程
-  getProcessLogByUserId: `${url}/process/log/user/userId`,
-
-  // 提交审核
-  postApprove: `${url}/process/approve`,
-
-  // 获取审核用户
-  getApproveUsers: `${url}/user/approve`,
-  // fileUrlPrefix
-  fileUrlPrefix: `${url}`
 }
