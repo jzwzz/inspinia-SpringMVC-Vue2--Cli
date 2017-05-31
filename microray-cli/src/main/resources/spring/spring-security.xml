@@ -20,7 +20,7 @@
     <bean id="restAuthenticationEntryPoint"
           class="com.cmbchina.microray.cli.auth.RestAuthenticationEntryPoint"/>
     <!-- Entry point for REST service. -->
-    <security:http entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
+    <security:http pattern="/security/**" entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
         <security:intercept-url pattern="/any/security/**" access="hasAnyRoleRole('ROLE_USER','ROLE_BDL01')"/>
         <security:intercept-url pattern="/bdl01/security/**" access="hasRole('ROLE_BDL01')"/>
         <security:intercept-url pattern="/user/security/**" access="hasRole('ROLE_USER')"/>

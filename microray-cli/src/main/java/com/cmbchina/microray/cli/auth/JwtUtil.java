@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Setter
 public class JwtUtil {
 
@@ -25,6 +27,9 @@ public class JwtUtil {
         try {
             Claims body = Jwts.parser().setSigningKey(secret)
                     .parseClaimsJws(token).getBody();
+            if ((Long) body.get("timestamp") + 2 * 60 * 60 * 1000 < System.currentTimeMillis()) {
+                throw new JwtException("token expired ");
+            }
             Credentials u = new Credentials();
             u.setUsername((String) body.get("username"));
             u.setPassword((String) body.get("password"));
@@ -49,6 +54,7 @@ public class JwtUtil {
         claims.put("username", u.getUsername());
         claims.put("password", u.getPassword());
         claims.put("roles", u.getRoles());
+        claims.put("timestamp", System.currentTimeMillis());
 
         return Jwts.builder().setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, secret).compact();

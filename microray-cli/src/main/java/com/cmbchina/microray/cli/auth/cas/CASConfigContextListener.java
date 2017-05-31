@@ -15,7 +15,9 @@ public class CASConfigContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         try {
-            CASConfig.init(URLDecoder.decode(CASConfig.class.getResource("/").getPath() + "cas.properties", "UTF-8"));
+            String path = event.getServletContext().getRealPath("/") + "WEB-INF/classes/META-INF/app.properties";
+            CASConfig.init(URLDecoder.decode(path, "UTF-8"));
+
             LOG.info("init CASConfig success");
         } catch (Exception e) {
             LOG.warn("can not init CASConfig: "+e.getMessage());
