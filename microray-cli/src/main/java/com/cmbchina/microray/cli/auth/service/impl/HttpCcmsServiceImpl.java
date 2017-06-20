@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,19 +90,12 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
     public ResponseResult getEmployeeInfoById(String employeeId) {
         HttpClient httpClient = HttpClients.createDefault();
         String url = CAS_SERVER + API_GET_USER_DETAIL + "&employeeId=" + employeeId + "&systemId=" + systemId;
-        HttpGet httpGet = new HttpGet(url);
-        HttpResponse httpResponse = null;
         try {
-            httpResponse = httpClient.execute(httpGet);
-        } catch (IOException e) {
-            log.error(e);
-            return new ResponseResult(ResponseConstants.REQUEST_FAILED, "请求CCMS异常");
-        }
-        String response;
-        Map<String, Object> resultMap = new HashMap<>();
-        try {
-            response = EntityUtils.toString(httpResponse.getEntity());
-            resultMap = JSON.parseObject(response);
+            HttpGet httpGet = null;
+            httpGet = new HttpGet(url);
+
+            HttpResponse httpResponse = httpClient.execute(httpGet);
+            String response = EntityUtils.toString(httpResponse.getEntity());
             Employee employee = new GsonBuilder().create().fromJson(response, Employee.class);
             return new ResponseResult<>(employee);
         } catch (IOException e) {
