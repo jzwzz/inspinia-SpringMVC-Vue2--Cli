@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
   }
 } else {
   CONFIG = {
-    url: 'http://99.48.28.44:8080',
+    url: 'http://99.48.6.207:8080',
     casUrl: 'http://99.48.232.122:8280/mr-cas',
     deploy: 'http://99.48.6.207:9080'
 
