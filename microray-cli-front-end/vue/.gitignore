@@ -12,7 +12,6 @@ yarn-error.log*
 # build files
 */WebRoot/WEB-INF/classes/
 */WebContent/WEB-INF/classes/
-**/build/
 **/bin
 *.class
 #ide file
