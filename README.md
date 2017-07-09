@@ -22,7 +22,7 @@
 ## 使用
 
 ```shell
-git clone http://git.cs/CCD_MicroRay/microray-cli.git
+git clone https://github.com/armysheng/inspinia-SpringMVC-Vue2--Cli
 ```
 
 ## 功能
