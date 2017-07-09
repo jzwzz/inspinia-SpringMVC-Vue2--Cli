@@ -46,8 +46,8 @@
         ]
     },
     {
-        "roleId": "ROLE_BDL01",
-        "roleName": "科室主管角色",
+        "roleId": "ROLE_ADMIN",
+        "roleName": "管理员",
         "menus": [
             {
                 "index": "1",

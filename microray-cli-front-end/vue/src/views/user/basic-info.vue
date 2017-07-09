@@ -209,8 +209,6 @@
   import { getAllScenarios, postSave } from '../../api/baseInfo.js'
   export default {
     mounted () {
-//      this.indexData()
-      this.scenarios = getAllScenarios()
     },
     data () {
       return {

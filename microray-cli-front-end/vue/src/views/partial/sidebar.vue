@@ -17,7 +17,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="clear">
                 <span class="block m-t-xs"><strong
-                  class="font-bold">[用户:]{{admin.employeeName}}</strong></span>
+                  class="font-bold">[用户:]{{admin.userName}}</strong></span>
               <span class="text-muted text-xs block">{{currentRole ? currentRole.roleName : ''}} <b
                 class="caret"></b></span>
               </span>

@@ -15,7 +15,7 @@
     <security:http pattern="/user/unsafe" security="none"/>
 
     <bean id="restAuthenticationEntryPoint"
-          class="com.cmbchina.microray.cli.auth.RestAuthenticationEntryPoint"/>
+          class="com.armysheng.auth.RestAuthenticationEntryPoint"/>
     <!-- Entry point for REST service. -->
     <security:http entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
         <security:intercept-url pattern="/any/security/**" access="hasAnyRoleRole('ROLE_USER','ROLE_BDL01')"/>
@@ -26,7 +26,7 @@
     </security:http>
 
     <!-- Custom Filter for REST service. -->
-    <bean id="jwtAuthenticationFilter" class="com.cmbchina.microray.cli.auth.JwtAuthenticationFilter">
+    <bean id="jwtAuthenticationFilter" class="com.armysheng.auth.JwtAuthenticationFilter">
         <property name="authenticationManager" ref="authenticationManager"/>
         <property name="authenticationSuccessHandler" ref="jwtAuthenticationSuccessHandler"/>
     </bean>
@@ -35,11 +35,11 @@
                 ref="jwtAuthenticationProvider"/>
     </security:authentication-manager>
     <bean id="jwtAuthenticationProvider"
-          class="com.cmbchina.microray.cli.auth.JwtAuthenticationProvider"/>
+          class="com.armysheng.auth.JwtAuthenticationProvider"/>
     <!-- A handler for successful REST service authentication. -->
     <bean id="jwtAuthenticationSuccessHandler"
-          class="com.cmbchina.microray.cli.auth.JwtAuthenticationSuccessHandler"/>
-    <bean id="jwtUtil" class="com.cmbchina.microray.cli.auth.JwtUtil">
+          class="com.armysheng.auth.JwtAuthenticationSuccessHandler"/>
+    <bean id="jwtUtil" class="com.armysheng.auth.JwtUtil">
         <property name="secret" value="${jwt.secret}"/>
     </bean>
 </beans>
