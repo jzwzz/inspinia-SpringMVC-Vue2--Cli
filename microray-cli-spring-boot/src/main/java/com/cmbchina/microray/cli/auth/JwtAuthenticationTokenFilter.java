@@ -1,44 +1,82 @@
 package com.cmbchina.microray.cli.auth;
 
-import org.springframework.security.core.Authentication;
+import io.jsonwebtoken.ExpiredJwtException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
-public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter {
+public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+    private final Log logger = LogFactory.getLog(this.getClass());
 
-    public JwtAuthenticationTokenFilter() {
-        super("/**");
-    }
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Value("${jwt.header}")
+    private String tokenHeader;
 
     @Override
-    protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        return true;
-    }
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+        final String requestHeader = request.getHeader(this.tokenHeader);
 
-    @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException {
-        String header = request.getHeader("Authorization");
-        if (header == null || !header.startsWith("Bearer ")) {
-            throw new JwtTokenMissingException("No JWT token found in request headers");
+        String username = null;
+        String authToken = null;
+        Credentials parsedUser = null;
+        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
+            authToken = requestHeader.substring(7);
+            try {
+                parsedUser = jwtUtil.parseToken(authToken);
+                username = parsedUser.getUsername();
+            } catch (IllegalArgumentException e) {
+                logger.error("an error occured during getting username from token", e);
+            } catch (ExpiredJwtException e) {
+                logger.warn("the token is expired and not valid anymore", e);
+            }
+        } else {
+            logger.warn("couldn't find bearer string, will ignore the header");
         }
-        String authToken = header.substring(7);
-        JwtAuthenticationToken authRequest = new JwtAuthenticationToken(authToken);
-        return getAuthenticationManager().authenticate(authRequest);
+
+        logger.info("checking authentication for user " + username);
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+            if (jwtUtil.validateToken(authToken)) {
+                UserDetails userDetails = retrieveUser(parsedUser);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                logger.info("authenticated user " + username + ", setting security context");
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        }
+
+        chain.doFilter(request, response);
     }
 
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
-            throws IOException, ServletException {
-        super.successfulAuthentication(request, response, chain, authResult);
-        // As this authentication is in HTTP header, after success we need to continue the request normally
-        // and return the response as if the resource was not secured at all
-        chain.doFilter(request, response);
+    protected UserDetails retrieveUser(Credentials parsedUser) throws AuthenticationException {
+
+        if (parsedUser == null) {
+            throw new JwtTokenMalformedException("JWT token is not valid");
+        }
+
+        List<GrantedAuthority> authorityList = AuthorityUtils
+                .commaSeparatedStringToAuthorityList(parsedUser.getRoles());
+        logger.info(authorityList);
+        return new User(parsedUser.getUsername()
+                , parsedUser.getPassword(), authorityList);
     }
 }

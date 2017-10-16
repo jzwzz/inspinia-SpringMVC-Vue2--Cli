@@ -5,6 +5,7 @@ import com.cmbchina.microray.cli.auth.JwtUtil;
 import com.cmbchina.microray.cli.common.ResponseResult;
 import com.cmbchina.microray.cli.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,12 +32,13 @@ public class UserController {
 
         return userService.login(credentials);
     }
-
+    @PreAuthorize("hasRole('ROLE_BDL01')")
     @RequestMapping(value = "security", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
     String getUserInfoWithToken(String message) {
         return "security: " + message;
     }
 
+    @PreAuthorize("hasRole('ROLE_SS')")
     @RequestMapping(value = "unsafe", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
     String getUserInfoWithoutToken(String message) {
         return "unsafe: " + message;

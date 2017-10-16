@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @SuppressWarnings("SpringJavaAutowiringInspection")
 @Configuration
@@ -22,30 +23,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
-    @Autowired
-    private JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @Autowired
     JwtAuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
 
+
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder
-                .authenticationProvider(jwtAuthenticationProvider);
+        authenticationManagerBuilder.isConfigured();
     }
+
 
     @Bean
     public JwtUtil jwtUtil() {
         return new JwtUtil(secret);
     }
 
-//    @Bean
-//    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-//        JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter = new JwtAuthenticationTokenFilter();
-//        jwtAuthenticationTokenFilter.setAuthenticationManager(authenticationManager());
-//        jwtAuthenticationTokenFilter.setAuthenticationSuccessHandler(jwtAuthenticationSuccessHandler);
-//        return jwtAuthenticationTokenFilter;
-//    }
+    @Bean
+    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+        return new JwtAuthenticationTokenFilter();
+    }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -72,13 +69,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js"
                 ).permitAll()
                 // 对于获取token的rest api要允许匿名访问
-                .antMatchers("/**").permitAll()
+                .antMatchers("/user/login").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
 
-//        // 添加JWT filter
-//        httpSecurity
-//                .addFilterAfter(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        // 添加JWT filter
+        httpSecurity
+                .addFilterAfter(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
         // 禁用缓存
         httpSecurity.headers().cacheControl();

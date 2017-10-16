@@ -4,9 +4,13 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.Setter;
+import lombok.Data;
+import org.springframework.stereotype.Component;
 
-@Setter
+import java.util.Date;
+
+@Component
+@Data
 public class JwtUtil {
 
     private String secret;
@@ -34,6 +38,7 @@ public class JwtUtil {
             u.setUsername((String) body.get("username"));
             u.setPassword((String) body.get("password"));
             u.setRoles((String) body.get("roles"));
+            u.setAuthorizedAt((Long) body.get("authorizedAt"));
             return u;
         } catch (JwtException | ClassCastException e) {
             e.printStackTrace();
@@ -54,6 +59,7 @@ public class JwtUtil {
         claims.put("username", u.getUsername());
         claims.put("password", u.getPassword());
         claims.put("roles", u.getRoles());
+        claims.put("authorizedAt", new Date().getTime());
 
         return Jwts.builder().setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
@@ -71,5 +77,14 @@ public class JwtUtil {
         Credentials credentials = jwtUtil.parseToken(token);
         System.out.println(credentials);
 
+    }
+
+    public Boolean validateToken(String token) {
+        final Long authorizedAt = parseToken(token).getAuthorizedAt();
+        return !isTokenExpired(authorizedAt);
+    }
+
+    private boolean isTokenExpired(Long authorizedAt) {
+        return new Date().getTime() - authorizedAt > 2 * 60 * 60 * 1000;
     }
 }
