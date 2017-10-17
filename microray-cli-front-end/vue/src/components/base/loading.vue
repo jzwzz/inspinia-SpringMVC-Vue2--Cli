@@ -21,10 +21,10 @@
 
 <template>
   <transition name="fade">
-  <div class="loading-mask"  v-show="show">
+    <div class="loading-mask" v-show="show">
 
-    <div class="sk-spinner sk-spinner-rotating-plane"></div>
-  </div>
+      <div class="sk-spinner sk-spinner-rotating-plane"></div>
+    </div>
   </transition>
 </template>
 

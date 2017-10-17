@@ -61,9 +61,10 @@
 
 <script>
   import { mapState, mapMutations } from 'vuex'
+
   export default {
     props: ['admin'],
-    data() {
+    data () {
       return {}
     },
     computed: {
@@ -95,7 +96,7 @@
         setCurrentRole: 'setCurrentRole',
         setActiveSubMenuIndex: 'setActiveSubMenuIndex'
       }),
-      roleChange(roleId) {
+      roleChange (roleId) {
         const role = this.admin.roles.find(function (item) {
           return item.roleId === roleId
         })
@@ -105,7 +106,7 @@
           this.$router.push(role.menus[0].subMenus[0].path)
         }
       },
-      menuChange(index) {
+      menuChange (index) {
         if (index.indexOf('-') !== -1) {
           this.setActiveSubMenuIndex(index)
           this.$localStorage.$set('activeSubMenuIndex', index)

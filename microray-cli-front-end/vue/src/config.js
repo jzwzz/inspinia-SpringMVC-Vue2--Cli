@@ -19,8 +19,9 @@ export default {
 
   SYS_ERR: 'SYS_ERR', // api请求系统错误
 
+  bookList: `${url}book/list`,
   // 登录
-  login: `${url}/user/login?systemId=BDLPortal`,
-  doLogin: `${url}/api/do_login`
+  login: `${url}user/login?systemId=BDLPortal`,
+  doLogin: `${url}api/do_login`
 
 }

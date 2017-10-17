@@ -2,8 +2,8 @@ import API from '../config.js'
 import Vue from 'vue'
 import { doError } from './api_doError.js'
 
-export const Login = function(params) {
-  return new Promise(function(resolve, reject) {
+export const Login = function (params) {
+  return new Promise(function (resolve, reject) {
     Vue.http
       .post(
         API.login + '&username=' + params.name + '&password=' + params.password
@@ -12,7 +12,7 @@ export const Login = function(params) {
         response => {
           // success callback
           let result = response.data
-          console.log(result)
+
           if (parseInt(result.respCode) === 1001) {
             resolve(result.data)
           } else {

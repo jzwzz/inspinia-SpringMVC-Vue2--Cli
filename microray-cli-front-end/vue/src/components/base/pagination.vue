@@ -41,10 +41,10 @@
       }
     },
     computed: {
-      isShow() {
+      isShow () {
         return this.totalPage > 1 || Math.ceil(this.count / this.pageSize) > 1
       },
-      pages() {
+      pages () {
         let totalPage = this.totalPage
         if (this.count) {
           totalPage = Math.ceil(this.count / this.pageSize)
@@ -76,10 +76,10 @@
         }
         return pageArr
       },
-      showPrev() {
+      showPrev () {
         return this.page > 1
       },
-      showNext() {
+      showNext () {
         return this.page < this.totalPage
       }
     }

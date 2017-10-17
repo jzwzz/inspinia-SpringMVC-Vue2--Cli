@@ -11,17 +11,17 @@ export default new Vuex.Store({
     activeSubMenuIndex: ''
   },
   mutations: {
-    setLoginState(state, isLogin) {
+    setLoginState (state, isLogin) {
       state.isLogin = isLogin
     },
-    updateUserInfo(state, payload) {
+    updateUserInfo (state, payload) {
       state.user = payload.user
     },
-    setCurrentRole(state, role) {
+    setCurrentRole (state, role) {
       state.currentRole = role
       state.activeSubMenuIndex = '1-1'
     },
-    setActiveSubMenuIndex(state, index) {
+    setActiveSubMenuIndex (state, index) {
       state.activeSubMenuIndex = index
     }
   }

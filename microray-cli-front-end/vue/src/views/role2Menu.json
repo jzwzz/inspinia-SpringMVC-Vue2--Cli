@@ -1,46 +1,46 @@
 [
-    {
-        "roleId": "ROLE_USER",
-        "roleName": "普通用户",
-        "menus": [
-            {
-                "index": "1",
-                "icon": "fa fa-dashboard",
-                "name": "xx面板1",
-                "subMenus": [
-                    {
-                        "index": "1-1",
-                        "icon": "fa fa-user",
-                        "path": "/todo/list",
-                        "name": "待办列表"
-                    },
-                    {
-                        "index": "1-2",
-                        "icon": "fa fa-send",
-                        "path": "/todo/add",
-                        "name": "新增表单"
-                    }
-                ]
-            },
-            {
-                "index": "2",
-                "icon": "fa fa-user",
-                "name": "xx面板2",
-                "subMenus": [
-                    {
-                        "index": "2-1",
-                        "icon": "fa fa-user",
-                        "path": "/user",
-                        "name": "用户面板2"
-                    },
-                    {
-                        "index": "2-2",
-                        "icon": "fa fa-send",
-                        "path": "/basic-info",
-                        "name": "基础信息2"
-                    }
-                ]
-            }
+  {
+    "roleId": "ROLE_USER",
+    "roleName": "普通用户",
+    "menus": [
+      {
+        "index": "1",
+        "icon": "fa fa-dashboard",
+        "name": "xx面板1",
+        "subMenus": [
+          {
+            "index": "1-1",
+            "icon": "fa fa-user",
+            "path": "/todo/list",
+            "name": "待办列表"
+          },
+          {
+            "index": "1-2",
+            "icon": "fa fa-send",
+            "path": "/todo/add",
+            "name": "新增表单"
+          }
         ]
-    }
+      },
+      {
+        "index": "2",
+        "icon": "fa fa-user",
+        "name": "xx面板2",
+        "subMenus": [
+          {
+            "index": "2-1",
+            "icon": "fa fa-user",
+            "path": "/book/list",
+            "name": "书籍列表"
+          },
+          {
+            "index": "2-2",
+            "icon": "fa fa-send",
+            "path": "/basic-info",
+            "name": "基础信息2"
+          }
+        ]
+      }
+    ]
+  }
 ]

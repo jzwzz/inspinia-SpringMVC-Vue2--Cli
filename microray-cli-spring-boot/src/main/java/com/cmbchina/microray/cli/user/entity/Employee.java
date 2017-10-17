@@ -1,7 +1,7 @@
 package com.cmbchina.microray.cli.user.entity;
 
-import com.cmbchina.microray.cli.common.utils.StringUtil;
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +21,15 @@ public class Employee {
     private String token;
     private List<Role> roles = new ArrayList<>();
 
-    public Employee addRole(Role role){
+    public void addRole(Role role) {
         this.roles.add(role);
-        return this;
     }
 
-    public String getCommaDelimitedRoleIds(){
+    public String getCommaDelimitedRoleIds() {
         ArrayList<String> roleIds = new ArrayList<>();
-        for (Role role :roles){
+        for (Role role : roles) {
             roleIds.add(role.getRoleId());
         }
-        return StringUtil.flat(roleIds,",","","");
+        return StringUtils.collectionToCommaDelimitedString(roleIds);
     }
 }

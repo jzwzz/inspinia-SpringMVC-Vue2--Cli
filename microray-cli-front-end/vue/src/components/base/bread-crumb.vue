@@ -5,7 +5,8 @@
       <ol class="breadcrumb" v-if="count>0">
         <li v-for="(val,key,index) in paths" :class="{'active':index==(count-1)}">
           <strong v-if="index==(count-1)"><span v-if="index==0">位置：</span>{{val.name}}</strong>
-          <router-link :to="val.url?val.url:'javascript:;'" v-else><span v-if="index==0">位置：</span>{{val.name}}</router-link>
+          <router-link :to="val.url?val.url:'javascript:;'" v-else><span v-if="index==0">位置：</span>{{val.name}}
+          </router-link>
         </li>
       </ol>
     </div>

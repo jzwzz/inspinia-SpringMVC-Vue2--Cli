@@ -5,14 +5,12 @@ import com.cmbchina.microray.cli.common.ResponseResult;
 import com.cmbchina.microray.cli.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -23,6 +21,7 @@ public class UserController {
 
         return userService.login(credentials);
     }
+
     @PreAuthorize("hasRole('ROLE_BDL01')")
     @RequestMapping(value = "security", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
     public String getUserInfoWithToken(String message) {

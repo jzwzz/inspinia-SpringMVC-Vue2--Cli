@@ -9,14 +9,6 @@
   import Vue from 'vue'
 
   export default {
-    mounted: function () {
-      Vue.http.interceptors.push((request, next) => {
-        this.showLoading = true
-        next(() => {
-          this.showLoading = false
-        })
-      })
-    },
     data: function () {
       return {
         showLoading: false

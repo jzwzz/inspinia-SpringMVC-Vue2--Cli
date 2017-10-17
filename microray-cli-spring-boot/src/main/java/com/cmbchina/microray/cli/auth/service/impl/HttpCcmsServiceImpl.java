@@ -30,8 +30,8 @@ import java.util.Map;
 @Service
 @Log4j
 @PropertySource("classpath:META-INF/app.properties")
-
 public class HttpCcmsServiceImpl implements HttpCcmsService {
+
     @Value("${cas.server}")
     private String CAS_SERVER;
     @Value("${cas.api.login}")
@@ -40,7 +40,6 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
     private String API_GET_USER_DETAIL;
     @Value("${app.name}")
     private String SystemId;
-
 
     @Override
     public ResponseResult login(String username, String password, String systemId) {
@@ -79,7 +78,6 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
         } catch (IOException e) {
             log.error(e);
             return new ResponseResult(ResponseConstants.REQUEST_FAILED, "请求CCMS异常");
-
         }
     }
 

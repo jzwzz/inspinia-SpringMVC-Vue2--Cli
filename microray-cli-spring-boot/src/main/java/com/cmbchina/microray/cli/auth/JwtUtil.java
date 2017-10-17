@@ -4,19 +4,37 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class JwtUtil {
 
+    @Value("${jwt.secret}")
     private String secret;
+    @Value("${jwt.expiration}")
+    private long jwtExpiration;
 
-    public JwtUtil(String secret) {
-        this.secret = secret;
+    public static void main(String[] args) {
+        JwtUtil jwtUtil = new JwtUtil("microray-cli-secret", 604800);
+        Credentials user = new Credentials();
+        user.setUsername("671852");
+        user.setPassword("111");
+        user.setRoles("ROLE_USER");
+        String token = jwtUtil.generateToken(user);
+        System.out.println(token);
+
+        Credentials credentials = jwtUtil.parseToken(token);
+        System.out.println(credentials);
+
     }
 
     /**
@@ -65,26 +83,12 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
-    public static void main(String[] args) {
-        JwtUtil jwtUtil = new JwtUtil("microray-cli-secret");
-        Credentials user = new Credentials();
-        user.setUsername("671852");
-        user.setPassword("111");
-        user.setRoles("ROLE_USER");
-        String token = jwtUtil.generateToken(user);
-        System.out.println(token);
-
-        Credentials credentials = jwtUtil.parseToken(token);
-        System.out.println(credentials);
-
-    }
-
-    public Boolean validateToken(String token) {
+    Boolean validateToken(String token) {
         final Long authorizedAt = parseToken(token).getAuthorizedAt();
         return !isTokenExpired(authorizedAt);
     }
 
     private boolean isTokenExpired(Long authorizedAt) {
-        return new Date().getTime() - authorizedAt > 2 * 60 * 60 * 1000;
+        return (new Date().getTime() - authorizedAt) > 2 * 60 * 60 * 1000;
     }
 }
