@@ -70,23 +70,29 @@ router.beforeEach((to, from, next) => {
       // 存在authorization信息，则验证下。
       if (Vue.$localStorage.authorization) {
         _checkAuth().then(
-          function () {
+          function() {
             next()
           },
-          function () {
-            redirectToCas()
+          function() {
+            next({
+              name: 'login'
+            })
           }
         )
       } else {
-        redirectToCas()
+        next({
+          name: 'login'
+        })
       }
     } else {
       _checkAuth().then(
-        function () {
+        function() {
           next()
         },
-        function () {
-          redirectToCas()
+        function() {
+          next({
+            name: 'login'
+          })
         }
       )
     }
@@ -98,8 +104,8 @@ router.beforeEach((to, from, next) => {
 /**
  * Token验证，只是对时间验证过期否
  * */
-function _checkAuth () {
-  return new Promise(function (resolve, reject) {
+function _checkAuth() {
+  return new Promise(function(resolve, reject) {
     let authorization = Vue.$localStorage.authorization
 
     let time = parseInt(authorization.time)
@@ -127,10 +133,6 @@ function _checkAuth () {
       reject()
     }
   })
-}
-
-function redirectToCas () {
-  window.location.href = API.casLogin + API.backendCasLogin
 }
 
 export default router
