@@ -23,18 +23,18 @@ let routes = [
         meta: {requiresAuth: true}
       },
       {
-        path: '/user',
-        name: 'user',
+        path: '/todo/list',
+        name: 'todo',
         component: resolve => {
-          require(['../views/user/index.vue'], resolve)
+          require(['../views/todo/list.vue'], resolve)
         },
         meta: {requiresAuth: true}
       },
       {
-        path: '/basic-info',
-        name: 'basic-info',
+        path: '/todo/add',
+        name: 'todo',
         component: resolve => {
-          require(['../views/user/basic-info.vue'], resolve)
+          require(['../views/todo/add.vue'], resolve)
         },
         meta: {requiresAuth: true}
       }
@@ -51,13 +51,6 @@ let routes = [
   {
     path: '*',
     redirect: '/login'
-  },
-  {
-    path: '/redirectLogin/:token',
-    name: 'redirectLogin',
-    component: resolve => {
-      require(['../views/redirectLogin.vue'], resolve)
-    }
   }
 ]
 

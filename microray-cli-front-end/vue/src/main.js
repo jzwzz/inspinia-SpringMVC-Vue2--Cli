@@ -7,7 +7,7 @@ import store from './vuex/store.js'
 import vStorage from './utils/vStorage.js'
 
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
+import './assets/css/theme-mr/index.css'
 // Style
 import './assets/css/bootstrap.css'
 import './assets/css/font-awesome.css'
@@ -22,7 +22,6 @@ import App from './app.vue'
 import registerComponent from './components/registerComponent'
 // Directives
 import registerDirective from './directives/registerDirective'
-// import authInterceptor from './interceptors/auth_interceptor'
 import router from './router'
 
 Vue.use(ElementUI)
@@ -32,9 +31,6 @@ Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
 Vue.http.headers.common['Content-Type'] = 'application/json;charset=utf-8'
 
 Vue.use(VueRouter)
-// Vue.use(Swal)
-
-// v storage
 Vue.use(vStorage, {
   storageKeyPrefix: 'microray-cli-'
 })
@@ -52,15 +48,6 @@ Vue.prototype.$store = window.localStorage || {}
 // Vue.config.devtools = config.debug
 
 Vue.http.options.root = '/'
-
-// let router = new VueRouter()
-// routeConfig(router)
-
-// authInterceptor(Vue)
-
-// router: router(App, '#app')
-
-// window.router = router
 
 new Vue({
   el: '#app',
