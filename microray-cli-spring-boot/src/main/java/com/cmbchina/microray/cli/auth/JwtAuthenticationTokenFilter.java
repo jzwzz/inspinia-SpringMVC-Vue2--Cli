@@ -67,7 +67,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         chain.doFilter(request, response);
     }
 
-    protected UserDetails retrieveUser(Credentials parsedUser) throws AuthenticationException {
+    private UserDetails retrieveUser(Credentials parsedUser) throws AuthenticationException {
 
         if (parsedUser == null) {
             throw new JwtTokenMalformedException("JWT token is not valid");

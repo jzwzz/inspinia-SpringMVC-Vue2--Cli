@@ -27,13 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     JwtAuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
 
-
-    @Autowired
-    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.isConfigured();
-    }
-
-
     @Bean
     public JwtUtil jwtUtil() {
         return new JwtUtil(secret);
@@ -75,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 添加JWT filter
         httpSecurity
-                .addFilterAfter(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
         // 禁用缓存
         httpSecurity.headers().cacheControl();
