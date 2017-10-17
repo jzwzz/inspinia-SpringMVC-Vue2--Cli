@@ -39,7 +39,7 @@
                     </el-popover>
                   </template>
                 </el-table-column>
-                <el-table-column prop="address"  label="地址">
+                <el-table-column prop="address" label="地址">
                 </el-table-column>
                 <el-table-column label="操作">
                   <template scope="scope">
@@ -65,7 +65,6 @@
 </template>
 
 <script>
-
   export default {
     data: function () {
       return {

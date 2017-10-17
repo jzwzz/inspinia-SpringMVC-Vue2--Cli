@@ -26,10 +26,6 @@ import router from './router'
 
 Vue.use(ElementUI)
 
-Vue.use(VueResource)
-Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
-Vue.http.headers.common['Content-Type'] = 'application/json;charset=utf-8'
-
 Vue.use(VueRouter)
 Vue.use(vStorage, {
   storageKeyPrefix: 'microray-cli-'
@@ -45,8 +41,10 @@ Vue.prototype.$store = window.localStorage || {}
 
 // config
 
-// Vue.config.devtools = config.debug
+Vue.use(VueResource)
 
+Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
+Vue.http.headers.common['Content-Type'] = 'application/json;charset=utf-8'
 Vue.http.options.root = '/'
 
 new Vue({

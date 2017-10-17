@@ -26,6 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     JwtAuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
 
+
+
     @Bean
     public JwtUtil jwtUtil() {
         return new JwtUtil(secret);
@@ -40,8 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 // 由于使用的是JWT，我们这里不需要csrf
+                .cors().and()
                 .csrf().disable()
-
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
                 // 基于token，所以不需要session
