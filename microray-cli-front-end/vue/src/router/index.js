@@ -24,7 +24,7 @@ let routes = [
       },
       {
         path: '/todo/list',
-        name: 'todo',
+        name: 'todo-list',
         component: resolve => {
           require(['../views/todo/list.vue'], resolve)
         },
@@ -32,7 +32,7 @@ let routes = [
       },
       {
         path: '/todo/add',
-        name: 'todo',
+        name: 'todo-add',
         component: resolve => {
           require(['../views/todo/add.vue'], resolve)
         },
@@ -109,7 +109,6 @@ function _checkAuth() {
     let authorization = Vue.$localStorage.authorization
 
     let time = parseInt(authorization.time)
-    console.log(authorization)
     if (new Date().getTime() - time < 1000 * 60 * 60 * 2) {
       // token有效,能进入
       if (!store.state.isLogin) {
