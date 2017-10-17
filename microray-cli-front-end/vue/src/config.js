@@ -1,6 +1,8 @@
 // 线上配置
+import { env } from 'shelljs'
+
 let CONFIG
-if (process.env.NODE_ENV === 'production') {
+if (env.NODE_ENV === 'production') {
   CONFIG = {
     url: 'http://bigdatalab.microray/data-lab'
   }
@@ -12,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 // 接口API根地址
 const url = CONFIG.url
 
-module.exports = {
+export default {
   /**
    * 通用状态码
    * */

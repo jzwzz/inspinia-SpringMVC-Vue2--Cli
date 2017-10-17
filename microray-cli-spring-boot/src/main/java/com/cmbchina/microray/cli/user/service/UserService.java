@@ -23,14 +23,15 @@ public class UserService {
     JwtUtil jwtUtil;
 
     private Logger logger = Logger.getLogger(UserService.class);
+
     public ResponseResult login(Credentials credentials) {
 
-        ResponseResult responseResult = httpCcmsService.login(credentials.getUsername(), credentials.getPassword(),credentials.getSystemId());
+        ResponseResult responseResult = httpCcmsService.login(credentials.getUsername(), credentials.getPassword(), credentials.getSystemId());
         if (responseResult.isSuccess()) {
             Employee employee = (Employee) responseResult.getData();
-            employee.addRole(new Role("USER","普通用户"));
+            employee.addRole(new Role("USER", "普通用户"));
             if (employee.getRoles() == null) {
-                logger.warn("No role exist in system **" + credentials.getSystemId() + "** for user " + credentials.getUsername()+"grant role DEFAULT");
+                logger.warn("No role exist in system **" + credentials.getSystemId() + "** for user " + credentials.getUsername() + "grant role DEFAULT");
             } else {
                 credentials.setRoles(employee.getCommaDelimitedRoleIds());
             }
@@ -42,8 +43,4 @@ public class UserService {
         }
     }
 
-    public ResponseResult getUserInfoById(String userId) {
-        ResponseResult responseResult = httpCcmsService.getEmployeeInfoById(userId);
-        return responseResult;
-    }
 }

@@ -7,11 +7,12 @@
 
 <script>
   import Vue from 'vue'
+
   export default {
     mounted: function () {
       Vue.http.interceptors.push((request, next) => {
         this.showLoading = true
-        next((response) => {
+        next(() => {
           this.showLoading = false
         })
       })
@@ -24,7 +25,7 @@
   }
 </script>
 <style>
-[v-cloak] {
+  [v-cloak] {
     display: none;
-}
+  }
 </style>

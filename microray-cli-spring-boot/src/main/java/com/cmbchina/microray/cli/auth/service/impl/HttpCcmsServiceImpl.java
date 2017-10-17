@@ -58,8 +58,8 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
 
         String url = CAS_SERVER + API_LOGIN + encodingData;
         HttpGet httpGet = new HttpGet(url);
-        HttpResponse httpResponse = null;
-        Map<String, Object> resultMap = new HashMap<>();
+        HttpResponse httpResponse;
+        Map<String, Object> resultMap;
         try {
             httpResponse = httpClient.execute(httpGet);
         } catch (IOException e) {
@@ -88,7 +88,7 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
         HttpClient httpClient = HttpClients.createDefault();
         String url = CAS_SERVER + API_GET_USER_DETAIL + "&employeeId=" + employeeId + "&systemId=" + SystemId;
         HttpGet httpGet = new HttpGet(url);
-        HttpResponse httpResponse = null;
+        HttpResponse httpResponse;
         try {
             httpResponse = httpClient.execute(httpGet);
         } catch (IOException e) {
@@ -96,16 +96,13 @@ public class HttpCcmsServiceImpl implements HttpCcmsService {
             return new ResponseResult(ResponseConstants.REQUEST_FAILED, "请求CCMS异常");
         }
         String response;
-        Map<String, Object> resultMap = new HashMap<>();
         try {
             response = EntityUtils.toString(httpResponse.getEntity());
-            resultMap = JSON.parseObject(response);
             Employee employee = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create().fromJson(response, Employee.class);
             return new ResponseResult<>(employee);
         } catch (IOException e) {
             log.error(e);
             return new ResponseResult(ResponseConstants.REQUEST_FAILED, "请求CCMS异常");
-
         }
     }
 

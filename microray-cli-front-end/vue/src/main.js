@@ -8,6 +8,22 @@ import vStorage from './utils/vStorage.js'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+// Style
+import './assets/css/bootstrap.css'
+import './assets/css/font-awesome.css'
+import './assets/css/animate.css'
+import './assets/css/style.css'
+// Js
+// import config from '../config'
+import './assets/js/jquery-2.1.1'
+import './assets/js/bootstrap'
+import App from './app.vue'
+// Common Components
+import registerComponent from './components/registerComponent'
+// Directives
+import registerDirective from './directives/registerDirective'
+// import authInterceptor from './interceptors/auth_interceptor'
+import router from './router'
 
 Vue.use(ElementUI)
 
@@ -23,32 +39,13 @@ Vue.use(vStorage, {
   storageKeyPrefix: 'microray-cli-'
 })
 
-// Style
-import './assets/css/bootstrap.css'
-import './assets/css/font-awesome.css'
-import './assets/css/animate.css'
-import './assets/css/style.css'
-
-// Js
-// import config from '../config'
-import './assets/js/jquery-2.1.1'
-import './assets/js/bootstrap'
-import App from './app'
-
-// Common Components
-import registerComponent from './components/registerComponent'
 registerComponent(Vue)
 
-// Directives
-import registerDirective from './directives/registerDirective'
 registerDirective(Vue)
-
-// import authInterceptor from './interceptors/auth_interceptor'
-import router from './router'
 
 // Storage
 Vue.prototype.$session = window.sessionStorage || {}
-Vue.prototype.$store = window.localstorage || {}
+Vue.prototype.$store = window.localStorage || {}
 
 // config
 
@@ -70,5 +67,5 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App }
+  components: {App}
 })
