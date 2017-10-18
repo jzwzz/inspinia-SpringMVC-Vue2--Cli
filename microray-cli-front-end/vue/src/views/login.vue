@@ -60,8 +60,9 @@
   import { Login } from '../api/api_auth.js'
   import { mapState, mapMutations } from 'vuex'
   import Role2Menu from './role2Menu.json'
+
   export default {
-    data() {
+    data () {
       return {
         credentials: {
           name: '',
@@ -75,7 +76,7 @@
         setLoginState: 'setLoginState',
         updateUserInfo: 'updateUserInfo'
       }),
-      handleLogin() {
+      handleLogin () {
         const _this = this
         if (this.credentials.name.trim() === '' || this.credentials.password.trim() === '') {
           this.$message({
@@ -103,14 +104,14 @@
         }
       },
       // get user roles Detail from role2Menu.json
-      setRoles(user) {
+      setRoles (user) {
         user.roles = Role2Menu.filter(function (item) {
           return user.commaDelimitedRoleIds.split(',').indexOf(item.roleId) !== -1
         })
         this.initCurrentRole(user)
         return user
       },
-      initCurrentRole(user) {
+      initCurrentRole (user) {
         if (user && user.roles) {
           this.setCurrentRole(user.roles[0])
           this.$localStorage.$set('currentRole', user.roles[0])

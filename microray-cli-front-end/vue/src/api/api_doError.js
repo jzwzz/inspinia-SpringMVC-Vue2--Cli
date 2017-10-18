@@ -6,7 +6,8 @@
 import Vue from 'vue'
 import { Message } from 'element-ui'
 import store from '../vuex/store.js'
-export const doError = function(code) {
+
+export const doError = function (code) {
   code = parseInt(code)
   switch (code) {
     case 1002:

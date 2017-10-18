@@ -14,10 +14,7 @@
               <div ibox-tools></div>
             </div>
             <div class="ibox-content">
-              <el-table
-                :data="tableData"
-                border
-                style="width: 100%">
+              <el-table :data="tableData" border style="width: 100%">
                 <el-table-column
                   label="日期"
                   width="180">
@@ -99,10 +96,10 @@
       }
     },
     methods: {
-      handleEdit(index, row) {
+      handleEdit (index, row) {
         console.log(index, row)
       },
-      handleDelete(index, row) {
+      handleDelete (index, row) {
         console.log(index, row)
       }
     }

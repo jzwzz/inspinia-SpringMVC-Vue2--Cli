@@ -20,8 +20,8 @@ export default {
       }
       $(this).parent('li').toggleClass('active').children('ul').collapse('toggle')
       // if ($toggle) {
-        $(this).parent('li').siblings().removeClass('active').children('ul.in').collapse('hide')
-     // }
+      $(this).parent('li').siblings().removeClass('active').children('ul.in').collapse('hide')
+      // }
     })
   },
 

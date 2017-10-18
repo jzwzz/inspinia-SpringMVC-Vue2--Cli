@@ -2,20 +2,20 @@
  * Description: localstorage和sessionStorage的插件
  */
 export default {
-  install: function(Vue, options) {
+  install: function (Vue, options) {
     var getPrototypeOf = Object.getPrototypeOf
 
     var isArray = Array.isArray
 
     var TYPED_ARRAY_REGEXP = /^\[object (Uint8(Clamped)?)|(Uint16)|(Uint32)|(Int8)|(Int16)|(Int32)|(Float(32)|(64))Array\]$/
 
-    var localStorage = (function() {
+    var localStorage = (function () {
       return (localStorage = _storageProvider('localStorage'))
     })()
-    var sessionStorage = (function() {
+    var sessionStorage = (function () {
       return (sessionStorage = _storageProvider('sessionStorage'))
     })()
-    var storage = (function() {
+    var storage = (function () {
       return (storage = {})
     })()
 
@@ -24,23 +24,23 @@ export default {
     Vue.$storage = storage
     Object.defineProperties(Vue.prototype, {
       $localStorage: {
-        get: function() {
+        get: function () {
           return localStorage
         }
       },
       $sessionStorage: {
-        get: function() {
+        get: function () {
           return sessionStorage
         }
       },
       $storage: {
-        get: function() {
+        get: function () {
           return storage
         }
       }
     })
 
-    function _storageProvider(storageType) {
+    function _storageProvider (storageType) {
       var storageKeyPrefix
       if (!!options && !!options.storageKeyPrefix) {
         storageKeyPrefix = options.storageKeyPrefix
@@ -55,32 +55,32 @@ export default {
       var _webStorage = isStorageSupported(window, storageType) // 浏览器的存储对象(localStorage/sessionStorage)
       // $storage对象的方法,单例模式,返回对象
       // vue内部维护的storage对象
-      var _storage = function() {
+      var _storage = function () {
         // 定义基础服务
         var _store = null
         _store = {
           // 重置全部后写入items => items保留其余重置
-          $reset: function(items) {
+          $reset: function (items) {
             for (var k in _store) {
               k[0] === '$' ||
-                (delete _store[k] &&
-                  _webStorage.removeItem(storageKeyPrefix + k))
+              (delete _store[k] &&
+                _webStorage.removeItem(storageKeyPrefix + k))
             }
             return _store.$set(items)
           },
           // 数据拉取(web本地storage->$storage内部)
-          $fetch: function() {
+          $fetch: function () {
             for (var i = 0, l = _webStorage.length, k; i < l; i++) {
               // #8, #10: `_webStorage.key(i)` may be an empty string (or throw an exception in IE9 if `_webStorage` is empty)
               (k = _webStorage.key(i)) &&
-                storageKeyPrefix === k.slice(0, prefixLength) &&
-                (_store[k.slice(prefixLength)] = deserializer(
-                  _webStorage.getItem(k)
-                ))
+              storageKeyPrefix === k.slice(0, prefixLength) &&
+              (_store[k.slice(prefixLength)] = deserializer(
+                _webStorage.getItem(k)
+              ))
             }
           },
           // 设置值
-          $set: function() {
+          $set: function () {
             var args = Array.prototype.slice.call(arguments)
             if (args.length === 1 && isObject(args[0])) {
               var obj = args[0]
@@ -96,11 +96,11 @@ export default {
             }
             return _store
           },
-          $delete: function(key) {
+          $delete: function (key) {
             delete _store[key] &&
-              _webStorage.removeItem(storageKeyPrefix + key)
+            _webStorage.removeItem(storageKeyPrefix + key)
           },
-          $supported: function() {
+          $supported: function () {
             return !!_webStorage
           }
         }
@@ -110,11 +110,11 @@ export default {
 
         // 设置代理
         var logHandler = {
-          get: function(target, key) {
+          get: function (target, key) {
             // console.log(`${key} 被读取`);
             return target[key]
           },
-          set: function(target, key, value, proxy) {
+          set: function (target, key, value, proxy) {
             // console.log(`${key} 被设置为 ${value}`);
             _store[key] = copy(value)
             _webStorage.setItem(storageKeyPrefix + key, serializer(value))
@@ -130,10 +130,10 @@ export default {
     // ---------tools---------
 
     /**
-         * 检查是否能使用存储功能
-         * 如果可以返回存储对象,否则返回false
-         * */
-    function isStorageSupported(window, storageType) {
+     * 检查是否能使用存储功能
+     * 如果可以返回存储对象,否则返回false
+     * */
+    function isStorageSupported (window, storageType) {
       // Some installations of IE, for an unknown reason, throw "SCRIPT5: Error: Access is denied"
       // when accessing window.localStorage. This happens before you try to do anything with it. Catch
       // that error and allow execution to continue.
@@ -163,33 +163,33 @@ export default {
       return supported
     }
 
-    function isDefined(value) {
+    function isDefined (value) {
       return typeof value !== 'undefined'
     }
 
     /**
-         * @ngdoc function
-         * @name angular.isFunction
-         * @module ng
-         * @kind function
-         *
-         * @description
-         * Determines if a reference is a `Function`.
-         *
-         * @param {*} value Reference to check.
-         * @returns {boolean} True if `value` is a `Function`.
-         */
-    function isFunction(value) {
+     * @ngdoc function
+     * @name angular.isFunction
+     * @module ng
+     * @kind function
+     *
+     * @description
+     * Determines if a reference is a `Function`.
+     *
+     * @param {*} value Reference to check.
+     * @returns {boolean} True if `value` is a `Function`.
+     */
+    function isFunction (value) {
       return typeof value === 'function'
     }
 
     /**
-         * @private
-         * @param {*} obj
-         * @return {boolean} Returns true if `obj` is an array or array-like object (NodeList, Arguments,
-         *                   String ...)
-         */
-    function isArrayLike(obj) {
+     * @private
+     * @param {*} obj
+     * @return {boolean} Returns true if `obj` is an array or array-like object (NodeList, Arguments,
+     *                   String ...)
+     */
+    function isArrayLike (obj) {
       // `null`, `undefined` and `window` are not array-like
       if (obj == null) return false
 
@@ -213,41 +213,41 @@ export default {
     }
 
     /**
-         * @ngdoc function
-         * @name angular.forEach
-         * @module ng
-         * @kind function
-         *
-         * @description
-         * Invokes the `iterator` function once for each item in `obj` collection, which can be either an
-         * object or an array. The `iterator` function is invoked with `iterator(value, key, obj)`, where `value`
-         * is the value of an object property or an array element, `key` is the object property key or
-         * array element index and obj is the `obj` itself. Specifying a `context` for the function is optional.
-         *
-         * It is worth noting that `.forEach` does not iterate over inherited properties because it filters
-         * using the `hasOwnProperty` method.
-         *
-         * Unlike ES262's
-         * [Array.prototype.forEach](http://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.18),
-         * providing 'undefined' or 'null' values for `obj` will not throw a TypeError, but rather just
-         * return the value provided.
-         *
-         ```js
-         var values = {name: 'misko', gender: 'male'};
-         var log = [];
-         angular.forEach(values, function(value, key) {
+     * @ngdoc function
+     * @name angular.forEach
+     * @module ng
+     * @kind function
+     *
+     * @description
+     * Invokes the `iterator` function once for each item in `obj` collection, which can be either an
+     * object or an array. The `iterator` function is invoked with `iterator(value, key, obj)`, where `value`
+     * is the value of an object property or an array element, `key` is the object property key or
+     * array element index and obj is the `obj` itself. Specifying a `context` for the function is optional.
+     *
+     * It is worth noting that `.forEach` does not iterate over inherited properties because it filters
+     * using the `hasOwnProperty` method.
+     *
+     * Unlike ES262's
+     * [Array.prototype.forEach](http://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.18),
+     * providing 'undefined' or 'null' values for `obj` will not throw a TypeError, but rather just
+     * return the value provided.
+     *
+     ```js
+     var values = {name: 'misko', gender: 'male'};
+     var log = [];
+     angular.forEach(values, function(value, key) {
        this.push(key + ': ' + value);
      }, log);
-         expect(log).toEqual(['name: misko', 'gender: male']);
-         ```
-         *
-         * @param {Object|Array} obj Object to iterate over.
-         * @param {Function} iterator Iterator function.
-         * @param {Object=} context Object to become context (`this`) for the iterator function.
-         * @returns {Object|Array} Reference to `obj`.
-         */
+     expect(log).toEqual(['name: misko', 'gender: male']);
+     ```
+     *
+     * @param {Object|Array} obj Object to iterate over.
+     * @param {Function} iterator Iterator function.
+     * @param {Object=} context Object to become context (`this`) for the iterator function.
+     * @returns {Object|Array} Reference to `obj`.
+     */
 
-    function forEach(obj, iterator, context) {
+    function forEach (obj, iterator, context) {
       var key, length
       if (obj) {
         if (isFunction(obj)) {
@@ -296,27 +296,27 @@ export default {
       return obj
     }
 
-    function isObject(value) {
+    function isObject (value) {
       // http://jsperf.com/isobject4
       return value !== null && typeof value === 'object'
     }
 
-    function isTypedArray(value) {
+    function isTypedArray (value) {
       return TYPED_ARRAY_REGEXP.test(toString.call(value))
     }
 
-    function isBlankObject(value) {
+    function isBlankObject (value) {
       return (
         value !== null && typeof value === 'object' && !getPrototypeOf(value)
       )
     }
 
     /**
-         * Set or clear the hashkey for an object.
-         * @param obj object
-         * @param h the hashkey (!truthy to delete the hashkey)
-         */
-    function setHashKey(obj, h) {
+     * Set or clear the hashkey for an object.
+     * @param obj object
+     * @param h the hashkey (!truthy to delete the hashkey)
+     */
+    function setHashKey (obj, h) {
       if (h) {
         obj.$$hashKey = h
       } else {
@@ -325,26 +325,26 @@ export default {
     }
 
     /**
-         * @ngdoc function
-         * @name angular.copy
-         * @module ng
-         * @kind function
-         *
-         * @description
-         * Creates a deep copy of `source`, which should be an object or an array.
-         *
-         * * If no destination is supplied, a copy of the object or array is created.
-         * * If a destination is provided, all of its elements (for arrays) or properties (for objects)
-         *   are deleted and then all elements/properties from the source are copied to it.
-         * * If `source` is not an object or array (inc. `null` and `undefined`), `source` is returned.
-         * * If `source` is identical to 'destination' an exception will be thrown.
-         *
-         * @param {*} source The source that will be used to make a copy.
-         *                   Can be any type, including primitives, `null`, and `undefined`.
-         * @param {(Object|Array)=} destination Destination into which the source is copied. If
-         *     provided, must be of the same type as `source`.
-         * */
-    function copy(source, destination, stackSource, stackDest) {
+     * @ngdoc function
+     * @name angular.copy
+     * @module ng
+     * @kind function
+     *
+     * @description
+     * Creates a deep copy of `source`, which should be an object or an array.
+     *
+     * * If no destination is supplied, a copy of the object or array is created.
+     * * If a destination is provided, all of its elements (for arrays) or properties (for objects)
+     *   are deleted and then all elements/properties from the source are copied to it.
+     * * If `source` is not an object or array (inc. `null` and `undefined`), `source` is returned.
+     * * If `source` is identical to 'destination' an exception will be thrown.
+     *
+     * @param {*} source The source that will be used to make a copy.
+     *                   Can be any type, including primitives, `null`, and `undefined`.
+     * @param {(Object|Array)=} destination Destination into which the source is copied. If
+     *     provided, must be of the same type as `source`.
+     * */
+    function copy (source, destination, stackSource, stackDest) {
       if (!destination) {
         destination = source
         if (isObject(source)) {
@@ -381,10 +381,7 @@ export default {
         }
       } else {
         if (source === destination) {
-          console.log(
-            'cpi',
-            "Can't copy! Source and destination are identical."
-          )
+          console.log('cpi', 'Can\'t copy! Source and destination are identical.')
           return
         }
 
@@ -407,7 +404,7 @@ export default {
           if (isArray(destination)) {
             destination.length = 0
           } else {
-            forEach(destination, function(value, key) {
+            forEach(destination, function (value, key) {
               delete destination[key]
             })
           }
@@ -453,21 +450,21 @@ export default {
     }
 
     /**
-         * @ngdoc function
-         * @name angular.toJson
-         * @module ng
-         * @kind function
-         *
-         * @description
-         * Serializes input into a JSON-formatted string. Properties with leading $$ characters will be
-         * stripped since angular uses this notation internally.
-         *
-         * @param {Object|Array|Date|string|number} obj Input to be serialized into JSON.
-         * @param {boolean|number} [pretty=2] If set to true, the JSON output will contain newlines and whitespace.
-         *    If set to an integer, the JSON output will contain that many spaces per indentation.
-         * @returns {string|undefined} JSON-ified string representing `obj`.
-         */
-    function toJson(obj, pretty) {
+     * @ngdoc function
+     * @name angular.toJson
+     * @module ng
+     * @kind function
+     *
+     * @description
+     * Serializes input into a JSON-formatted string. Properties with leading $$ characters will be
+     * stripped since angular uses this notation internally.
+     *
+     * @param {Object|Array|Date|string|number} obj Input to be serialized into JSON.
+     * @param {boolean|number} [pretty=2] If set to true, the JSON output will contain newlines and whitespace.
+     *    If set to an integer, the JSON output will contain that many spaces per indentation.
+     * @returns {string|undefined} JSON-ified string representing `obj`.
+     */
+    function toJson (obj, pretty) {
       if (typeof obj === 'undefined') return undefined
       if (!isNumber(pretty)) {
         pretty = pretty ? 2 : null
@@ -475,7 +472,7 @@ export default {
       return JSON.stringify(obj, toJsonReplacer, pretty)
     }
 
-    function toJsonReplacer(key, value) {
+    function toJsonReplacer (key, value) {
       var val = value
 
       if (
@@ -492,65 +489,65 @@ export default {
     }
 
     /**
-         * @ngdoc function
-         * @name angular.fromJson
-         * @module ng
-         * @kind function
-         *
-         * @description
-         * Deserializes a JSON string.
-         *
-         * @param {string} json JSON string to deserialize.
-         * @returns {Object|Array|string|number} Deserialized JSON string.
-         */
-    function fromJson(json) {
+     * @ngdoc function
+     * @name angular.fromJson
+     * @module ng
+     * @kind function
+     *
+     * @description
+     * Deserializes a JSON string.
+     *
+     * @param {string} json JSON string to deserialize.
+     * @returns {Object|Array|string|number} Deserialized JSON string.
+     */
+    function fromJson (json) {
       return isString(json) ? JSON.parse(json) : json
     }
 
     /**
-         * @ngdoc function
-         * @name angular.isString
-         * @module ng
-         * @kind function
-         *
-         * @description
-         * Determines if a reference is a `String`.
-         *
-         * @param {*} value Reference to check.
-         * @returns {boolean} True if `value` is a `String`.
-         */
-    function isString(value) {
+     * @ngdoc function
+     * @name angular.isString
+     * @module ng
+     * @kind function
+     *
+     * @description
+     * Determines if a reference is a `String`.
+     *
+     * @param {*} value Reference to check.
+     * @returns {boolean} True if `value` is a `String`.
+     */
+    function isString (value) {
       return typeof value === 'string'
     }
 
     /**
-         * @ngdoc function
-         * @name angular.isDate
-         * @module ng
-         * @kind function
-         *
-         * @description
-         * Determines if a value is a date.
-         *
-         * @param {*} value Reference to check.
-         * @returns {boolean} True if `value` is a `Date`.
-         */
-    function isDate(value) {
+     * @ngdoc function
+     * @name angular.isDate
+     * @module ng
+     * @kind function
+     *
+     * @description
+     * Determines if a value is a date.
+     *
+     * @param {*} value Reference to check.
+     * @returns {boolean} True if `value` is a `Date`.
+     */
+    function isDate (value) {
       return toString.call(value) === '[object Date]'
     }
 
     /**
-         * Determines if a value is a regular expression object.
-         *
-         * @private
-         * @param {*} value Reference to check.
-         * @returns {boolean} True if `value` is a `RegExp`.
-         */
-    function isRegExp(value) {
+     * Determines if a value is a regular expression object.
+     *
+     * @private
+     * @param {*} value Reference to check.
+     * @returns {boolean} True if `value` is a `RegExp`.
+     */
+    function isRegExp (value) {
       return toString.call(value) === '[object RegExp]'
     }
 
-    function isNumber(value) {
+    function isNumber (value) {
       return typeof value === 'number'
     }
   }

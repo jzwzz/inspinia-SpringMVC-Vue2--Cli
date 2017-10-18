@@ -20,7 +20,7 @@
 <script>
 
   export default {
-    data() {
+    data () {
       return {
         opened: false
       }
@@ -41,7 +41,7 @@
         default: () => { return {} }
       }
     },
-    mounted() {
+    mounted () {
       document.getElementsByTagName('body')[0].appendChild(this.$el)
       this.$element = $(this.$el)
       this.$element.modal($.extend({show: false}, this.options))
@@ -53,11 +53,11 @@
       })
     },
     methods: {
-      open() {
+      open () {
         this.opened = true
         this.$element.modal('show')
       },
-      close() {
+      close () {
         this.$element.modal('hide')
       }
     }
@@ -67,9 +67,11 @@
   .slide-fade-enter-active {
     transition: all .3s ease;
   }
+
   .slide-fade-leave-active {
     transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
+
   .slide-fade-enter, .slide-fade-leave-active {
     transform: translateX(10px);
     opacity: 0;
