@@ -89,6 +89,6 @@ public class JwtUtil {
     }
 
     private boolean isTokenExpired(Long authorizedAt) {
-        return (new Date().getTime() - authorizedAt) > 2 * 60 * 60 * 1000;
+        return (new Date().getTime() - authorizedAt) > jwtExpiration;
     }
 }
