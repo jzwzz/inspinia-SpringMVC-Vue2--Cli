@@ -31,7 +31,7 @@
           <div>
             <img class="login-logo" src="../assets/img/logo.png">
           </div>
-          <h3 class="login-title">XX后台管理系统（服务商端）</h3>
+          <h3 class="login-title">微光场景营销运营平台</h3>
           <form class="m-t" role="form" onsubmit="return false">
             <div class="form-group">
               <div class="input-group">
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-
+  import Vue from 'vue'
   import { Login } from '../api/api_auth.js'
   import { mapState, mapMutations } from 'vuex'
   import Role2Menu from './role2Menu.json'
@@ -92,7 +92,7 @@
               time: new Date().getTime()
             })
             _this.$localStorage.$set('userInfo', user)
-            _this.$http.headers.common['authorization'] = 'Bearer ' + user.token
+            Vue.http.headers.common['authorization'] = 'Bearer  ' + user.token
             _this.setLoginState(true)
             _this.updateUserInfo({
               user: user

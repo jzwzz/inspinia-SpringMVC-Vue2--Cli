@@ -9,7 +9,7 @@
 
       </div>
       <div class="pull-left" style="line-height:30px;padding:15px 0 0 10px;font-size:18px;">
-        微光XX平台
+        微光场景营销运营平台
       </div>
       <ul class="nav navbar-top-links navbar-right">
         <li>

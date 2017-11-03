@@ -26,5 +26,3 @@ export const Login = function (params) {
   })
 }
 
-const LOGOUT_URL = 'logout'
-

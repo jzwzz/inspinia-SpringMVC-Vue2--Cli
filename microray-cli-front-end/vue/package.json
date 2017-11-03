@@ -1,8 +1,8 @@
-  {
-  "name": "modelingplatform_frontend",
+{
+  "name": "MrRTM-Guardian-ui",
   "version": "1.0.0",
-  "description": "modeling platform front end project with vue v2.*",
-  "author": "guyuan <guyuan@it.com>",
+  "description": "Front end of MrRTM-Guardian",
+  "author": "shengjunhui <shengjunhui@it.com>",
   "private": true,
   "eslintConfig": {
     "env": {
@@ -16,8 +16,9 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
-    "element-ui": "^1.3.1",
+    "element-ui": "^2.0.0",
     "vue": "^2.2.6",
+    "vue-json-tree-view": "^2.1.1",
     "vue-resource": "^1.3.1",
     "vue-router": "^2.3.1",
     "vuex": "^2.3.1"

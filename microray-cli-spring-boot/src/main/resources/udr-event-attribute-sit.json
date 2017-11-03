@@ -1,0 +1,93 @@
+[
+  {
+    "id": "5lfOynWghzEkJaQX",
+    "columnName": "account_type",
+    "name": "账户类型",
+    "dataType": "STRING"
+  },
+  {
+    "id": "oIr7XXIbnPanAmaL",
+    "columnName": "approval_code",
+    "name": "授权码",
+    "dataType": "STRING"
+  },
+  {
+    "id": "nPAu4niye1DQDuXy",
+    "columnName": "approval_timestamp",
+    "name": "交易时间",
+    "dataType": "DATE",
+    "dateFormat": "yyMMddHHmmss"
+  },
+  {
+    "id": "KyOtp1xmNstKhRxh",
+    "columnName": "approval_handle_date",
+    "name": "授权处理日(文本)",
+    "dataType": "STRING"
+  },
+  {
+    "id": "E6JDSHwoHJ5odxmZ",
+    "columnName": "card_number",
+    "name": "卡号",
+    "dataType": "STRING"
+  },
+  {
+    "id": "8k1NJfK79eOPzNZV",
+    "columnName": "filler_field",
+    "name": "授权filler前四位",
+    "dataType": "STRING"
+  },
+  {
+    "id": "mh0WK7cmNbCkkUpk",
+    "columnName": "message_type",
+    "name": "消息类型",
+    "dataType": "STRING"
+  },
+  {
+    "id": "p3J0kl1F29RfpAnZ",
+    "columnName": "response_code",
+    "name": "交易返回码",
+    "dataType": "STRING"
+  },
+  {
+    "id": "PKQ6C6IssOIri2EM",
+    "columnName": "retailer_id",
+    "name": "零售商号",
+    "dataType": "STRING"
+  },
+  {
+    "id": "xMR42cJS6geVSJ1y",
+    "columnName": "proxy_approval_flag",
+    "name": "代授权标识",
+    "dataType": "STRING"
+  },
+  {
+    "id": "fuYnR4ddPS07JHm9",
+    "columnName": "sequence_number",
+    "name": "交易流水号",
+    "dataType": "STRING"
+  },
+  {
+    "id": "2m3gg7rdnAPye88V",
+    "columnName": "sys_id",
+    "name": "客户ID",
+    "dataType": "STRING"
+  },
+  {
+    "id": "SddHvAV3ibRHpxcE",
+    "columnName": "transaction_amount",
+    "name": "折合人民币金额（分）",
+    "dataType": "LONG"
+  },
+  {
+    "id": "e4mmV2PoRtToDlE6",
+    "columnName": "transaction_code",
+    "name": "交易码",
+    "dataType": "STRING"
+  },
+  {
+    "id": "lBeNAB0pAZMfuYMb",
+    "columnName": "transaction_type",
+    "name": "交易类型",
+    "dataType": "STRING"
+  }
+]

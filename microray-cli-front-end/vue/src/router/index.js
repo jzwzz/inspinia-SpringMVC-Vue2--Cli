@@ -14,34 +14,36 @@ let routes = [
     meta: {requiresAuth: true},
     children: [
       {
-        path: '/dashboard',
-        name: 'dashboard',
+        path: 'archive',
+        name: 'archive',
         component: resolve => {
-          require(['../views/dashboard.vue'], resolve)
+          require(['../views//archive/index.vue'], resolve)
         },
-        meta: {requiresAuth: true}
+        meta: {requiresAuth: true},
+        children: [
+          {
+            path: 'list',
+            name: 'archive-list',
+            component: resolve => {
+              require(['../views/archive/list.vue'], resolve)
+            },
+            meta: {requiresAuth: true}
+          },
+          {
+            path: 'detail/:id',
+            name: 'archive-detail',
+            component: resolve => {
+              require(['../views/archive/detail.vue'], resolve)
+            },
+            meta: {requiresAuth: true}
+          }
+        ]
       },
       {
-        path: '/todo/list',
-        name: 'todo-list',
+        path: 'tools',
+        name: 'tools',
         component: resolve => {
-          require(['../views/todo/list.vue'], resolve)
-        },
-        meta: {requiresAuth: true}
-      },
-      {
-        path: '/todo/add',
-        name: 'todo-add',
-        component: resolve => {
-          require(['../views/todo/add.vue'], resolve)
-        },
-        meta: {requiresAuth: true}
-      },
-      {
-        path: '/book/list',
-        name: 'book',
-        component: resolve => {
-          require(['../views/book-list.vue'], resolve)
+          require(['../views/tools/index.vue'], resolve)
         },
         meta: {requiresAuth: true}
       }
@@ -120,6 +122,8 @@ function _checkAuth () {
       // token有效,能进入
       if (!store.state.isLogin) {
         let userinfo = Vue.$localStorage.userInfo
+        let currentRole = Vue.$localStorage.currentRole
+        store.commit('setCurrentRole', currentRole)
         store.commit('setLoginState', true)
         store.commit('updateUserInfo', {
           user: userinfo

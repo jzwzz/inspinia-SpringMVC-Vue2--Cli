@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import store from './vuex/store.js'
 import vStorage from './utils/vStorage.js'
+import TreeView from 'vue-json-tree-view'
 
 import ElementUI from 'element-ui'
 import './assets/css/theme-mr/index.css'
@@ -13,6 +14,7 @@ import './assets/css/bootstrap.css'
 import './assets/css/font-awesome.css'
 import './assets/css/animate.css'
 import './assets/css/style.css'
+import './assets/css/custom.css'
 // Js
 // import config from '../config'
 import './assets/js/jquery-2.1.1'
@@ -28,9 +30,9 @@ Vue.use(ElementUI)
 
 Vue.use(VueRouter)
 Vue.use(vStorage, {
-  storageKeyPrefix: 'microray-cli-'
+  storageKeyPrefix: 'rtm-guardian'
 })
-
+Vue.use(TreeView)
 registerComponent(Vue)
 
 registerDirective(Vue)

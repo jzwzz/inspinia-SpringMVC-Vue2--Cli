@@ -1,6 +1,6 @@
-# modelingplatform_frontend
+# MrRTM-Guardian-ui
 
-> modeling platform front end project with vue v2.*
+> Front end of MrRTM-Guardian project with vue v2.*
 
 ## Build Setup
 
@@ -8,7 +8,7 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:3000
 npm run dev
 
 # build for production with minification

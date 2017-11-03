@@ -1,43 +1,68 @@
 [
   {
-    "roleId": "ROLE_USER",
-    "roleName": "普通用户",
+    "roleId": "ROLE_RMG01",
+    "roleName": "数据检核员",
     "menus": [
       {
         "index": "1",
-        "icon": "fa fa-dashboard",
-        "name": "xx面板1",
+        "icon": "fa fa-user",
+        "name": "批次管理",
         "subMenus": [
           {
             "index": "1-1",
-            "icon": "fa fa-user",
-            "path": "/todo/list",
-            "name": "待办列表"
+            "icon": "fa fa-send",
+            "path": "/archive/list",
+            "name": "批次列表 "
           },
           {
             "index": "1-2",
-            "icon": "fa fa-send",
-            "path": "/todo/add",
-            "name": "新增表单"
+            "icon": "fa fa-wrench",
+            "path": "/tools",
+            "name": "工具箱"
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    "roleId": "ROLE_RMG02",
+    "roleName": "数据审核领导",
+    "menus": [
       {
         "index": "2",
         "icon": "fa fa-user",
-        "name": "xx面板2",
+        "name": "批次审批",
         "subMenus": [
           {
             "index": "2-1",
-            "icon": "fa fa-user",
-            "path": "/book/list",
-            "name": "书籍列表"
+            "icon": "fa fa-send-o",
+            "path": "/archive/list",
+            "name": "批次列表 "
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "roleId": "ROLE_RMG03",
+    "roleName": "高级开发人员",
+    "menus": [
+      {
+        "index": "3",
+        "icon": "fa fa-user",
+        "name": "运维管理",
+        "subMenus": [
+          {
+            "index": "3-1",
+            "icon": "fa fa-wrench",
+            "path": "/tools",
+            "name": "工具箱"
           },
           {
-            "index": "2-2",
-            "icon": "fa fa-send",
-            "path": "/basic-info",
-            "name": "基础信息2"
+            "index": "3-2",
+            "icon": "fa fa-send-o",
+            "path": "/archive/list",
+            "name": "批次列表"
           }
         ]
       }
